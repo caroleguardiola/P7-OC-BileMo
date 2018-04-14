@@ -61,6 +61,7 @@ class Brand
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
+        $this->mobilePhones = new ArrayCollection();
     }
 
     /**

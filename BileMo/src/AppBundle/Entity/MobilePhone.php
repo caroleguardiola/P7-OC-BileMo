@@ -124,6 +124,12 @@ class MobilePhone
     private $brand;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $os;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -607,5 +613,29 @@ class MobilePhone
     public function getBrand()
     {
         return $this->brand;
+    }
+
+    /**
+     * Set os.
+     *
+     * @param Os $os
+     *
+     * @return MobilePhone
+     */
+    public function setOs(Os $os)
+    {
+        $this->os = $os;
+
+        return $this;
+    }
+
+    /**
+     * Get os.
+     *
+     * @return Os
+     */
+    public function getOs()
+    {
+        return $this->os;
     }
 }

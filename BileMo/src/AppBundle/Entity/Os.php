@@ -29,6 +29,11 @@ class Os
     private $name;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MobilePhone", mappedBy="os", cascade={"persist","remove"})
+     */
+    private $mobilePhones;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="dateCreation", type="datetime_immutable")
@@ -56,6 +61,8 @@ class Os
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
+        $this->mobilePhones = new ArrayCollection();
+
     }
 
     /**
@@ -162,5 +169,42 @@ class Os
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Add mobilePhone.
+     *
+     * @param MobilePhone $mobilePhone
+     *
+     * @return Os
+     */
+    public function addMobilePhone(MobilePhone $mobilePhone)
+    {
+        $this->mobilePhones[] = $mobilePhone;
+        $mobilePhone->setOs($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove mobilePhone.
+     *
+     * @param MobilePhone $mobilePhone
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeMobilePhone(MobilePhone $mobilePhone)
+    {
+        return $this->mobilePhones->removeElement($mobilePhone);
+    }
+
+    /**
+     * Get mobilePhones.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMobilePhones()
+    {
+        return $this->mobilePhones;
     }
 }
