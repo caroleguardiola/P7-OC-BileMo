@@ -57,6 +57,12 @@ class Address
     private $country;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addresses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -286,5 +292,29 @@ class Address
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param User $user
+     *
+     * @return Address
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

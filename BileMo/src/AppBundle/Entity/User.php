@@ -70,6 +70,11 @@ class User
     private $customer;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Address", mappedBy="user", cascade={"persist","remove"})
+     */
+    private $addresses;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -97,6 +102,7 @@ class User
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
+        $this->addresses = new ArrayCollection();
     }
 
     /**
@@ -347,5 +353,42 @@ class User
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * Add address.
+     *
+     * @param Address $address
+     *
+     * @return User
+     */
+    public function addAddress(Address $address)
+    {
+        $this->addresses[] = $address;
+        $address->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove address.
+     *
+     * @param \AppBundle\Entity\Address $address
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAddress(Address $address)
+    {
+        return $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }
