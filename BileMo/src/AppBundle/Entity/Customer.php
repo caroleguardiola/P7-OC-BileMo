@@ -57,6 +57,11 @@ class Customer
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="customer", cascade={"persist","remove"})
+     */
+    private $users;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -84,6 +89,7 @@ class Customer
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -286,5 +292,42 @@ class Customer
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Add user.
+     *
+     * @param User $user
+     *
+     * @return Customer
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+        $user->setCustomer($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param User $user
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUser(User $user)
+    {
+        return $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

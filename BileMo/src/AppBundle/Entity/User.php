@@ -64,6 +64,12 @@ class User
     private $password;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $customer;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -317,5 +323,29 @@ class User
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Set customer.
+     *
+     * @param Customer $customer
+     *
+     * @return User
+     */
+    public function setCustomer(Customer $customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer.
+     *
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }
