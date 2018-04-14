@@ -24,7 +24,7 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="recipient", type="string", length=255, unique=true)
+     * @ORM\Column(name="recipient", type="string", length=255)
      */
     private $recipient;
 
@@ -77,6 +77,14 @@ class Address
      */
     private $dateDeactivation;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \Datetime();
+    }
 
     /**
      * Get id.

@@ -51,6 +51,14 @@ class Os
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \Datetime();
+    }
+
+    /**
      * Get id.
      *
      * @return int

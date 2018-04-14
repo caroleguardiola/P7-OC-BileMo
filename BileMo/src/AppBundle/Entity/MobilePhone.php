@@ -113,6 +113,11 @@ class MobilePhone
     private $priceCents;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
+     */
+    private $images;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -133,6 +138,15 @@ class MobilePhone
      */
     private $dateDeactivation;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \Datetime();
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -526,5 +540,42 @@ class MobilePhone
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Add image.
+     *
+     * @param Image $image
+     *
+     * @return MobilePhone
+     */
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+        $image->setMobilePhone($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove image.
+     *
+     * @param Image $image
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeImage(Image $image)
+    {
+        return $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

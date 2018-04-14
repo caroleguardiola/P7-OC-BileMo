@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Image
 {
@@ -36,6 +37,12 @@ class Image
     private $alt;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MobilePhone", inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mobilePhone;
+    
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -56,6 +63,14 @@ class Image
      */
     private $dateDeactivation;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \Datetime();
+    }
 
     /**
      * Get id.
@@ -185,5 +200,29 @@ class Image
     public function getDateDeactivation()
     {
         return $this->dateDeactivation;
+    }
+
+    /**
+     * Set mobilePhone.
+     *
+     * @param MobilePhone $mobilePhone
+     *
+     * @return Image
+     */
+    public function setMobilePhone(MobilePhone $mobilePhone)
+    {
+        $this->mobilePhone = $mobilePhone;
+
+        return $this;
+    }
+
+    /**
+     * Get mobilePhone.
+     *
+     * @return MobilePhone
+     */
+    public function getMobilePhone()
+    {
+        return $this->mobilePhone;
     }
 }
