@@ -118,6 +118,12 @@ class MobilePhone
     private $images;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $brand;
+
+    /**
      * @var datetime_immutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
@@ -577,5 +583,29 @@ class MobilePhone
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set brand.
+     *
+     * @param Brand $brand
+     *
+     * @return MobilePhone
+     */
+    public function setBrand(Brand $brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Get brand.
+     *
+     * @return Brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
     }
 }
