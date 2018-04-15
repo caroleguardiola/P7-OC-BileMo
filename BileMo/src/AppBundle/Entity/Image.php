@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 /**
  * Image
@@ -35,6 +37,14 @@ class Image
      * @ORM\Column(name="alt", type="string", length=255)
      */
     private $alt;
+
+    /**
+     * @var UploadedFile
+     *
+     */
+    private $file;
+
+    private $tempFilename;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MobilePhone", inversedBy="images")
@@ -232,5 +242,106 @@ class Image
     public function getMobilePhone()
     {
         return $this->mobilePhone;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+        if (null !== $this->extension) {
+            $this->tempFilename = $this->extension;
+            $this->extension = null;
+            $this->alt = null;
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->extension = $this->file->guessExtension();
+
+        $this->alt = $this->file->getClientOriginalName();
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        if (null !== $this->tempFilename) {
+            $oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+
+        $this->file->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->extension
+        );
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload()
+    {
+        $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->extension;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (file_exists($this->tempFilename)) {
+            unlink($this->tempFilename);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getUploadDir()
+    {
+        return 'uploads/mobilephone/images';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
     }
 }

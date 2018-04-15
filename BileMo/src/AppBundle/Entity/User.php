@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+
 
 /**
  * User
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class User
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var int
@@ -57,12 +59,19 @@ class User
      */
     private $email;
 
+    private $plainPassword;
+
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=60, unique=true)
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", inversedBy="users")
@@ -104,6 +113,7 @@ class User
     {
         $this->dateCreation = new \Datetime();
         $this->addresses = new ArrayCollection();
+        $this->isActive = false;
     }
 
     /**
@@ -234,6 +244,16 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 
     /**
@@ -399,5 +419,89 @@ class User
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive,
+            // see section on salt below
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive,
+            // see section on salt below
+            ) = unserialize($serialized);
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isActive.
+     *
+     * @param bool $isActive
+     *
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive.
+     *
+     * @return bool
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }
