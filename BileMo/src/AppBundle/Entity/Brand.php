@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="brand")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BrandRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Brand
 {
@@ -120,6 +121,14 @@ class Brand
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+    {
+        $this->setUpdatedAt(new \Datetime());
     }
 
     /**

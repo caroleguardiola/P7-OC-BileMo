@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="mobile_phone")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MobilePhoneRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MobilePhone
 {
@@ -504,6 +505,14 @@ class MobilePhone
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+    {
+        $this->setUpdatedAt(new \Datetime());
     }
 
     /**

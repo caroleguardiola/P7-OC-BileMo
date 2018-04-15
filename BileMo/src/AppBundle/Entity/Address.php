@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="address")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AddressRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Address
 {
@@ -244,6 +245,14 @@ class Address
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+    {
+        $this->setUpdatedAt(new \Datetime());
     }
 
     /**
