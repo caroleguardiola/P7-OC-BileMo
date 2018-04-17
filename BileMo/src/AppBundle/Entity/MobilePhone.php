@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 
 /**
@@ -12,6 +15,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="mobile_phone")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MobilePhoneRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @ExclusionPolicy("all")
+ *
  */
 class MobilePhone
 {
@@ -21,6 +27,9 @@ class MobilePhone
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
+     *
      */
     private $id;
 
@@ -28,6 +37,9 @@ class MobilePhone
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255, unique=true)
+     *
+     * @Expose
+     *
      */
     private $model;
 
@@ -35,6 +47,9 @@ class MobilePhone
      * @var string
      *
      * @ORM\Column(name="reference", type="string", length=255, unique=true)
+     *
+     * @Expose
+     *
      */
     private $reference;
 
@@ -42,6 +57,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="capacity_gb", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $capacityGb;
 
@@ -49,6 +67,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="display_inch", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $displayInch;
 
@@ -56,6 +77,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="camera_mp", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $cameraMp;
 
@@ -63,6 +87,9 @@ class MobilePhone
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=45)
+     *
+     * @Expose
+     *
      */
     private $color;
 
@@ -70,6 +97,9 @@ class MobilePhone
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     *
+     * @Expose
+     *
      */
     private $description;
 
@@ -77,6 +107,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="height_mm", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $heightMm;
 
@@ -84,6 +117,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="width_mm", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $widthMm;
 
@@ -91,6 +127,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="depth_mm", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $depthMm;
 
@@ -98,6 +137,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="weight_grams", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $weightGrams;
 
@@ -105,6 +147,9 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="price_euros", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $priceEuros;
 
@@ -112,23 +157,35 @@ class MobilePhone
      * @var int
      *
      * @ORM\Column(name="price_cents", type="integer", options={"unsigned":true})
+     *
+     * @Expose
+     *
      */
     private $priceCents;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
+     *
+     * @Expose
+     *
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Expose
+     *
      */
     private $brand;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Expose
+     *
      */
     private $os;
 
