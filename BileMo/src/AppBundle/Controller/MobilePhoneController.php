@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\MobilePhone;
 use AppBundle\Representation\MobilePhones;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -16,6 +17,9 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 class MobilePhoneController extends FOSRestController
 {
     /**
+     * @param ParamFetcherInterface $paramFetcher
+     * @return MobilePhones
+     *
      * @Rest\Get(
      *     path = "/mobilephones",
      *     name = "app_mobilephone_list",
@@ -44,7 +48,9 @@ class MobilePhoneController extends FOSRestController
      *     default="1",
      *     description="The pagination offset"
      * )
-     * @Rest\View
+     * @Rest\View(
+     *     statusCode = 200
+     * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -56,5 +62,23 @@ class MobilePhoneController extends FOSRestController
         );
 
         return new MobilePhones($pager);
+    }
+
+    /**
+     * @param MobilePhone $mobilephone
+     * @return MobilePhone
+     *
+     * @Rest\Get(
+     *     path = "/mobilephones/{id}",
+     *     name = "app_mobilephone_show",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(
+     *     statusCode = 200
+     * )
+     */
+    public function showAction(MobilePhone $mobilephone)
+    {
+        return $mobilephone;
     }
 }
