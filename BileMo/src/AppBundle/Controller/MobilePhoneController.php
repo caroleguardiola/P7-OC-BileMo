@@ -24,11 +24,11 @@ class MobilePhoneController extends FOSRestController
      *     path = "/mobilephones",
      *     name = "app_mobilephone_list",
      * )
-     * @Rest\QueryParam(
-     *     name="brand",
-     *     requirements="\d+",
+     *  @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9\s]+",
      *     nullable=true,
-     *     description="The brand to search for."
+     *     description="The keyword to search for."
      * )
      * @Rest\QueryParam(
      *     name="order",
@@ -45,7 +45,7 @@ class MobilePhoneController extends FOSRestController
      * @Rest\QueryParam(
      *     name="offset",
      *     requirements="\d+",
-     *     default="1",
+     *     default="0",
      *     description="The pagination offset"
      * )
      * @Rest\View(
@@ -55,7 +55,7 @@ class MobilePhoneController extends FOSRestController
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
         $pager = $this->getDoctrine()->getRepository('AppBundle:MobilePhone')->search(
-            $paramFetcher->get('brand'),
+            $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')

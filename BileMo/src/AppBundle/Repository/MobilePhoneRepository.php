@@ -10,18 +10,17 @@ namespace AppBundle\Repository;
  */
 class MobilePhoneRepository extends AbstractRepository
 {
-    public function search($brand, $order = 'asc', $limit = 20, $offset = 1)
+    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('mp')
             ->select('mp')
             ->orderBy('mp.model', $order)
         ;
-
-        if ($brand) {
-            $qb
-                ->where('mp.brand = :brand')
-                ->setParameter('brand', $brand)
+        if ($term) {
+            $qb = $qb
+                ->where('mp.model LIKE ?1')
+                ->setParameter(1, '%'.$term.'%')
             ;
         }
 
