@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Carole Guardiola
- * Date: 17/04/2018
- * Time: 12:20
+ * Date: 19/04/2018
+ * Time: 17:51
  */
 
 namespace AppBundle\Representation;
@@ -11,10 +11,10 @@ namespace AppBundle\Representation;
 use Pagerfanta\Pagerfanta;
 use JMS\Serializer\Annotation\Type;
 
-class MobilePhones
+class Users
 {
     /**
-     * @Type("array<AppBundle\Entity\MobilePhone>")
+     * @Type("array<AppBundle\Entity\User>")
      */
     public $data;
 

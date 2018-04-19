@@ -2,29 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: Carole Guardiola
- * Date: 16/04/2018
- * Time: 11:11
+ * Date: 19/04/2018
+ * Time: 17:41
  */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\MobilePhone;
-use AppBundle\Representation\MobilePhones;
+use AppBundle\Representation\Users;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-
-class MobilePhoneController extends FOSRestController
+class UserController extends FOSRestController
 {
     /**
-     * @param ParamFetcherInterface $paramFetcher
-     * @return MobilePhones
-     *
      * @Rest\Get(
-     *     path = "/mobilephones",
-     *     name = "app_mobilephone_list",
+     *     path = "/users",
+     *     name = "app_users_list",
      * )
-     *  @Rest\QueryParam(
+     * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9\s]+",
      *     nullable=true,
@@ -48,37 +43,19 @@ class MobilePhoneController extends FOSRestController
      *     default="0",
      *     description="The pagination offset"
      * )
-     * @Rest\View(
+     *  @Rest\View(
      *     statusCode = 200
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
-        $pager = $this->getDoctrine()->getRepository('AppBundle:MobilePhone')->search(
+        $pager = $this->getDoctrine()->getRepository('AppBundle:User')->search(
             $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')
         );
 
-        return new MobilePhones($pager);
-    }
-
-    /**
-     * @param MobilePhone $mobilephone
-     * @return MobilePhone
-     *
-     * @Rest\Get(
-     *     path = "/mobilephones/{id}",
-     *     name = "app_mobilephone_show",
-     *     requirements = {"id"="\d+"}
-     * )
-     * @Rest\View(
-     *     statusCode = 200
-     * )
-     */
-    public function showAction(MobilePhone $mobilephone)
-    {
-        return $mobilephone;
+        return new Users($pager);
     }
 }
