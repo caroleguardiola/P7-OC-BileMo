@@ -8,13 +8,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use AppBundle\Representation\Users;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 class UserController extends FOSRestController
 {
+
     /**
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Users
+     *
      * @Rest\Get(
      *     path = "/users",
      *     name = "app_users_list",
@@ -57,5 +62,23 @@ class UserController extends FOSRestController
         );
 
         return new Users($pager);
+    }
+
+    /**
+     * @param User $user
+     * @return User
+     *
+     * @Rest\Get(
+     *     path = "/users/{id}",
+     *     name = "app_user_show",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(
+     *     statusCode = 200
+     * )
+     */
+    public function showAction(User $user)
+    {
+        return $user;
     }
 }
