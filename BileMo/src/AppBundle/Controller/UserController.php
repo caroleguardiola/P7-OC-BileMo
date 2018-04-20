@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Representation\Users;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 class UserController extends FOSRestController
@@ -80,5 +81,31 @@ class UserController extends FOSRestController
     public function showAction(User $user)
     {
         return $user;
+    }
+
+    /**
+     * @param User $user
+     * @return \FOS\RestBundle\View\View
+     *
+     * @Rest\Post(
+     *    path = "/users",
+     *    name = "app_user_create"
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("user", converter="fos_rest.request_body")
+     */
+    public function createAction(User $user)
+    {
+        $passwordEncoder = $this->get('security.password_encoder');
+
+        $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $user->setPassword($password);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->view($user, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_user_show', ['id' => $user->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     }
 }

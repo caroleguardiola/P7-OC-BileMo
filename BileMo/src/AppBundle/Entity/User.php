@@ -60,6 +60,9 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $email;
 
+    /**
+     * @var string
+     */
     private $plainPassword;
 
     /**
@@ -75,7 +78,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"}, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
@@ -86,23 +89,23 @@ class User implements AdvancedUserInterface, \Serializable
     private $addresses;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTime
      *
-     * @ORM\Column(name="date_creation", type="datetime_immutable")
+     * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updatedat", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="updatedat", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
      */
     private $dateDeactivation;
 

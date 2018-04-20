@@ -58,29 +58,29 @@ class Address
     private $country;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addresses")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"}, inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTime
      *
-     * @ORM\Column(name="date_creation", type="datetime_immutable")
+     * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
      */
     private $dateDeactivation;
 

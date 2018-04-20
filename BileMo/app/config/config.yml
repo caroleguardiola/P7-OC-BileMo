@@ -79,5 +79,6 @@ fos_rest:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
     param_fetcher_listener: force
 
-#sensio_framework_extra:
- #   view: { annotations: false }
+sensio_framework_extra:
+#   view: { annotations: false }
+    request: { converters: true }

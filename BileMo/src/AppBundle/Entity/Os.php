@@ -37,23 +37,23 @@ class Os
     private $mobilePhones;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime_immutable")
+     * @ORM\Column(name="dateCreation", type="datetime")
      */
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updatedAt", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="dateDeactivation", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="dateDeactivation", type="datetime", nullable=true)
      */
     private $dateDeactivation;
 
