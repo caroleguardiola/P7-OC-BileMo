@@ -108,4 +108,26 @@ class UserController extends FOSRestController
 
         return $this->view($user, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_user_show', ['id' => $user->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Rest\Delete(
+     *     path="/users/{id}",
+     *     name="app_user_delete",
+     *     requirements={ "id"="\d+" }
+     * )
+     * @Rest\View(StatusCode=200)
+     */
+    public function deleteAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userdelete = $em->getRepository('AppBundle:User')->find($user);
+
+        $em->remove($userdelete);
+        $em->flush();
+
+        return $this->redirectToRoute('app_users_list');
+    }
 }
