@@ -35,7 +35,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="user_number", type="integer", unique=true, options={"unsigned":true})
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="integer")
      */
     private $userNumber;
@@ -46,7 +46,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -58,7 +58,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="first_name", type="string", length=255)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -70,7 +70,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="last_name", type="string", length=255)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -82,7 +82,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Email
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -93,7 +93,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @Serializer\Groups({"create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=4096)
      */
@@ -110,7 +110,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      *
      * @Serializer\Groups({"detail_user", "create_user"})
-     * @Assert\NotBlank(groups={"Create_User"})
+     * @Assert\NotBlank
      * @Assert\Type(type="bool")
     */
     private $isActive;
