@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Address
@@ -10,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="address")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AddressRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
  */
 class Address
 {
@@ -19,6 +22,7 @@ class Address
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
@@ -26,6 +30,10 @@ class Address
      * @var string
      *
      * @ORM\Column(name="recipient", type="string", length=255)
+     *
+     * @Serializer\Groups({"detail_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     private $recipient;
 
@@ -33,6 +41,11 @@ class Address
      * @var string
      *
      * @ORM\Column(name="street_address", type="string", length=255)
+     *
+     * @Serializer\Groups({"detail_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $streetAddress;
 
@@ -40,6 +53,11 @@ class Address
      * @var string
      *
      * @ORM\Column(name="zip_code", type="string", length=5)
+     *
+     * @Serializer\Groups({"detail_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=5)
      */
     private $zipCode;
 
@@ -47,19 +65,31 @@ class Address
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
+     *
+     * @Serializer\Groups({"detail_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=255, unique=true)
+     * @ORM\Column(name="country", type="string", length=255)
+     *
+     * @Serializer\Groups({"detail_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $country;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"}, inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\Valid()
      */
     private $user;
 
@@ -81,6 +111,8 @@ class Address
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
      */
     private $dateDeactivation;
 

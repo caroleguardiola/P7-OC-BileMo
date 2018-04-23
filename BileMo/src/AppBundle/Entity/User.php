@@ -5,7 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -22,6 +24,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"list_users"})
      */
     private $id;
 
@@ -29,6 +33,10 @@ class User implements AdvancedUserInterface, \Serializable
      * @var int
      *
      * @ORM\Column(name="user_number", type="integer", unique=true, options={"unsigned":true})
+     *
+     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="integer")
      */
     private $userNumber;
 
@@ -36,6 +44,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     *
+     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $username;
 
@@ -43,6 +56,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
+     *
+     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $firstName;
 
@@ -50,6 +68,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
+     *
+     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $lastName;
 
@@ -57,11 +80,22 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     *
+     * @Serializer\Groups({"detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Email
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $email;
 
     /**
      * @var string
+     *
+     * @Serializer\Groups({"create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
@@ -74,17 +108,26 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
-     */
+     *
+     * @Serializer\Groups({"detail_user", "create_user"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="bool")
+    */
     private $isActive;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"}, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank
+     * @Assert\Valid()
      */
     private $customer;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Address", mappedBy="user", cascade={"persist","remove"})
+     *
+     * @Serializer\Groups({"detail_user"})
      */
     private $addresses;
 
@@ -106,6 +149,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
      */
     private $dateDeactivation;
 
@@ -117,7 +162,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->dateCreation = new \Datetime();
         $this->addresses = new ArrayCollection();
-        $this->isActive = false;
+        $this->isActive = true;
     }
 
     /**
