@@ -49,7 +49,8 @@ class MobilePhoneController extends FOSRestController
      *     description="The pagination offset"
      * )
      * @Rest\View(
-     *     statusCode = 200
+     *     statusCode = 200,
+     *     serializerGroups = {"list_mobilephones"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -74,7 +75,8 @@ class MobilePhoneController extends FOSRestController
      *     requirements = {"id"="\d+"}
      * )
      * @Rest\View(
-     *     statusCode = 200
+     *     statusCode = 200,
+     *     serializerGroups = {"detail_mobilephone"}
      * )
      */
     public function showAction(MobilePhone $mobilephone)

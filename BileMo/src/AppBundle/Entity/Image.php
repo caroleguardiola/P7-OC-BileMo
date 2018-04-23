@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -12,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
  */
 class Image
 {
@@ -28,6 +32,11 @@ class Image
      * @var string
      *
      * @ORM\Column(name="extension", type="string", length=45)
+     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=45)
      */
     private $extension;
 
@@ -35,12 +44,18 @@ class Image
      * @var string
      *
      * @ORM\Column(name="alt", type="string", length=255)
+     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $alt;
 
     /**
      * @var UploadedFile
      *
+     * @Assert\Image()
      */
     private $file;
 
@@ -49,6 +64,9 @@ class Image
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MobilePhone", cascade={"persist"}, inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank
+     * @Assert\Valid()
      */
     private $mobilePhone;
     
@@ -70,6 +88,8 @@ class Image
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
      */
     private $dateDeactivation;
 

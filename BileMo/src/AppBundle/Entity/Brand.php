@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -12,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="brand")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BrandRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
  */
 class Brand
 {
@@ -28,6 +32,11 @@ class Brand
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -54,6 +63,9 @@ class Brand
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
+     *
      */
     private $dateDeactivation;
 

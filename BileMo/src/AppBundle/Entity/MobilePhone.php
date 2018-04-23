@@ -5,9 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MobilePhone
@@ -15,8 +13,6 @@ use JMS\Serializer\Annotation\Expose;
  * @ORM\Table(name="mobile_phone")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MobilePhoneRepository")
  * @ORM\HasLifecycleCallbacks()
- *
- * @ExclusionPolicy("all")
  *
  */
 class MobilePhone
@@ -28,7 +24,7 @@ class MobilePhone
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Expose
+     * @Serializer\Groups({"list_mobilephones"})
      *
      */
     private $id;
@@ -38,8 +34,10 @@ class MobilePhone
      *
      * @ORM\Column(name="model", type="string", length=255, unique=true)
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $model;
 
@@ -48,8 +46,10 @@ class MobilePhone
      *
      * @ORM\Column(name="reference", type="string", length=255, unique=true)
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $reference;
 
@@ -58,18 +58,20 @@ class MobilePhone
      *
      * @ORM\Column(name="capacity_gb", type="integer", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $capacityGb;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="display_inch", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="display_inch", type="float", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
      */
     private $displayInch;
 
@@ -78,8 +80,9 @@ class MobilePhone
      *
      * @ORM\Column(name="camera_mp", type="integer", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $cameraMp;
 
@@ -88,8 +91,10 @@ class MobilePhone
      *
      * @ORM\Column(name="color", type="string", length=45)
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=45)
      */
     private $color;
 
@@ -98,38 +103,42 @@ class MobilePhone
      *
      * @ORM\Column(name="description", type="text")
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     private $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="height_mm", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="height_mm", type="float", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
      */
     private $heightMm;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="width_mm", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="width_mm", type="float", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
      */
     private $widthMm;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="depth_mm", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="depth_mm", type="float", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
      */
     private $depthMm;
 
@@ -138,8 +147,9 @@ class MobilePhone
      *
      * @ORM\Column(name="weight_grams", type="integer", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $weightGrams;
 
@@ -148,8 +158,9 @@ class MobilePhone
      *
      * @ORM\Column(name="price_euros", type="integer", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $priceEuros;
 
@@ -158,16 +169,16 @@ class MobilePhone
      *
      * @ORM\Column(name="price_cents", type="integer", options={"unsigned":true})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $priceCents;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
      */
     private $images;
 
@@ -175,8 +186,9 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Valid()
      */
     private $brand;
 
@@ -184,8 +196,9 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Expose
-     *
+     * @Serializer\Groups({"detail_mobilephone"})
+     * @Assert\NotBlank
+     * @Assert\Valid()
      */
     private $os;
 
@@ -207,6 +220,8 @@ class MobilePhone
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
      */
     private $dateDeactivation;
 

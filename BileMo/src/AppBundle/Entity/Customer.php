@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -12,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
  */
 class Customer
 {
@@ -28,6 +31,9 @@ class Customer
      * @var int
      *
      * @ORM\Column(name="customer_number", type="integer", unique=true, options={"unsigned":true})
+     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="int")
      */
     private $customerNumber;
 
@@ -35,6 +41,10 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $username;
 
@@ -42,6 +52,10 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -49,8 +63,22 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     *
+     * @Assert\NotBlank
+     * @Assert\Email
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @var string
@@ -82,6 +110,8 @@ class Customer
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
      */
     private $dateDeactivation;
 

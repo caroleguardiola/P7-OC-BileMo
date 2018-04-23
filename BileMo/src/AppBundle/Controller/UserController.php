@@ -14,9 +14,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+
 class UserController extends FOSRestController
 {
-
     /**
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
@@ -50,7 +50,8 @@ class UserController extends FOSRestController
      *     description="The pagination offset"
      * )
      *  @Rest\View(
-     *     statusCode = 200
+     *     statusCode = 200,
+     *     serializerGroups = {"list_users"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -75,7 +76,8 @@ class UserController extends FOSRestController
      *     requirements = {"id"="\d+"}
      * )
      * @Rest\View(
-     *     statusCode = 200
+     *     statusCode = 200,
+     *     serializerGroups = {"detail_user"}
      * )
      */
     public function showAction(User $user)
@@ -91,7 +93,9 @@ class UserController extends FOSRestController
      *    path = "/users",
      *    name = "app_user_create"
      * )
-     * @Rest\View(StatusCode = 201)
+     * @Rest\View(
+     *     StatusCode = 201,
+     *     serializerGroups = {"create_user"})
      * @ParamConverter("user", converter="fos_rest.request_body")
      */
     public function createAction(User $user)
