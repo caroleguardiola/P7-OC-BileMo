@@ -14,6 +14,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends FOSRestController
 {
@@ -96,10 +98,18 @@ class UserController extends FOSRestController
      * @Rest\View(
      *     StatusCode = 201,
      *     serializerGroups = {"create_user"})
-     * @ParamConverter("user", converter="fos_rest.request_body")
+     * @ParamConverter(
+     *     "user",
+     *     converter="fos_rest.request_body",
+     *     options={
+     *         "validator"={ "groups"="Create_User" })
      */
-    public function createAction(User $user)
+    public function createAction(User $user, ConstraintViolationList $violations)
     {
+        if (count($violations)) {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
+
         $passwordEncoder = $this->get('security.password_encoder');
 
         $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
