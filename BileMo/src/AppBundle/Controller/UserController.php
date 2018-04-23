@@ -16,6 +16,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\Exception\ResourceValidationException;
 
 class UserController extends FOSRestController
 {
@@ -89,26 +91,38 @@ class UserController extends FOSRestController
 
     /**
      * @param User $user
+     * @param ConstraintViolationList $violations
      * @return \FOS\RestBundle\View\View
      *
+     * @throws ResourceValidationException
      * @Rest\Post(
      *    path = "/users",
      *    name = "app_user_create"
      * )
      * @Rest\View(
      *     StatusCode = 201,
-     *     serializerGroups = {"create_user"})
+     *     serializerGroups = {"create_user"}
+     * )
      * @ParamConverter(
      *     "user",
      *     converter="fos_rest.request_body",
      *     options={
-     *         "validator"={ "groups"="Create_User" })
+     *         "validator"={ "groups"="Create_User" }
+     *     }
+     * )
      */
     public function createAction(User $user, ConstraintViolationList $violations)
     {
         if (count($violations)) {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            foreach ($violations as $violation) {
+                $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
+            }
+
+            throw new ResourceValidationException($message);
         }
+
+        $user->setDateCreation(new \DateTime());
 
         $passwordEncoder = $this->get('security.password_encoder');
 
