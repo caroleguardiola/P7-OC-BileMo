@@ -24,7 +24,15 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *     ),
- *      exclusion = @Hateoas\Exclusion(groups = "detail_user")
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ * )
+ *  @Hateoas\Relation(
+ *      "list",
+ *      href = @Hateoas\Route(
+ *          "app_users_list",
+ *          absolute = true
+ *     ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
  * )
  * @Hateoas\Relation(
  *      "create",
@@ -32,7 +40,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "app_user_create",
  *          absolute = true
  *     ),
- *      exclusion = @Hateoas\Exclusion(groups = "detail_user")
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -41,7 +49,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *     ),
- *      *      exclusion = @Hateoas\Exclusion(groups = "detail_user")
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
  * )
  */
 class User implements AdvancedUserInterface, \Serializable

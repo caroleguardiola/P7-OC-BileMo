@@ -22,7 +22,15 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *     ),
- *      exclusion = @Hateoas\Exclusion(groups = "detail_mobilephone")
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ *  @Hateoas\Relation(
+ *      "list",
+ *      href = @Hateoas\Route(
+ *          "app_mobilephone_list",
+ *          absolute = true
+ *     ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
  * )
  *
  */
