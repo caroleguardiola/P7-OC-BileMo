@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Hateoas\Configuration\Annotation as Hateoas;
 
 
 /**
@@ -16,6 +16,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks()
  *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "app_image_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "detail_image"})
+ * )
  */
 class Image
 {
@@ -25,6 +34,7 @@ class Image
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
@@ -33,7 +43,7 @@ class Image
      *
      * @ORM\Column(name="extension", type="string", length=45)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Groups({"detail_mobilephone", "detail_image"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=45)
@@ -45,7 +55,7 @@ class Image
      *
      * @ORM\Column(name="alt", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Groups({"detail_mobilephone", "detail_image"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 
 /**
  * Address
@@ -13,6 +15,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AddressRepository")
  * @ORM\HasLifecycleCallbacks()
  *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "app_address_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_address", "detail_user"})
+ * )
  */
 class Address
 {
@@ -31,7 +42,7 @@ class Address
      *
      * @ORM\Column(name="recipient", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user"})
+     * @Serializer\Groups({"detail_user", "detail_address"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      */
@@ -42,7 +53,7 @@ class Address
      *
      * @ORM\Column(name="street_address", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user"})
+     * @Serializer\Groups({"detail_user", "detail_address"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -54,7 +65,7 @@ class Address
      *
      * @ORM\Column(name="zip_code", type="string", length=5)
      *
-     * @Serializer\Groups({"detail_user"})
+     * @Serializer\Groups({"detail_user", "detail_address"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=5)
@@ -66,7 +77,7 @@ class Address
      *
      * @ORM\Column(name="city", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user"})
+     * @Serializer\Groups({"detail_user", "detail_address"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -78,7 +89,7 @@ class Address
      *
      * @ORM\Column(name="country", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user"})
+     * @Serializer\Groups({"detail_user", "detail_address"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -92,6 +103,15 @@ class Address
      * @Assert\Valid()
      */
     private $user;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     *
+     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Assert\NotBlank
+     * @Assert\Type(type="bool")
+     */
+    private $isActive;
 
     /**
      * @var \DateTime
@@ -123,6 +143,7 @@ class Address
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
+        $this->isActive = true;
     }
 
     /**
@@ -357,5 +378,29 @@ class Address
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set isActive.
+     *
+     * @param bool $isActive
+     *
+     * @return Address
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive.
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->isActive;
     }
 }

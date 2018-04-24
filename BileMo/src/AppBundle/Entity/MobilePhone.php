@@ -21,7 +21,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "app_mobilephone_show",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *     ),
+ *      ),
  *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
  * )
  *  @Hateoas\Relation(
@@ -29,8 +29,23 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      href = @Hateoas\Route(
  *          "app_mobilephone_list",
  *          absolute = true
- *     ),
+ *      ),
  *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "brand",
+ *     embedded = @Hateoas\Embedded("expr(object.getBrand())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "os",
+ *     embedded = @Hateoas\Embedded("expr(object.getOs())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "images",
+ *     embedded = @Hateoas\Embedded("expr(object.getImages())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
  * )
  *
  */
@@ -197,7 +212,6 @@ class MobilePhone
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      */
     private $images;
 
@@ -205,7 +219,6 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      * @Assert\NotBlank
      * @Assert\Valid()
      */
@@ -215,7 +228,6 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      * @Assert\NotBlank
      * @Assert\Valid()
      */
