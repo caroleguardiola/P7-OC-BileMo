@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * MobilePhone
@@ -13,6 +14,39 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="mobile_phone")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MobilePhoneRepository")
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "app_mobilephone_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ *  @Hateoas\Relation(
+ *      "list",
+ *      href = @Hateoas\Route(
+ *          "app_mobilephone_list",
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "brand",
+ *     embedded = @Hateoas\Embedded("expr(object.getBrand())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "os",
+ *     embedded = @Hateoas\Embedded("expr(object.getOs())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
+ * @Hateoas\Relation(
+ *     "images",
+ *     embedded = @Hateoas\Embedded("expr(object.getImages())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ * )
  *
  */
 class MobilePhone
@@ -178,7 +212,6 @@ class MobilePhone
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      */
     private $images;
 
@@ -186,7 +219,6 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      * @Assert\NotBlank
      * @Assert\Valid()
      */
@@ -196,7 +228,6 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
      * @Assert\NotBlank
      * @Assert\Valid()
      */

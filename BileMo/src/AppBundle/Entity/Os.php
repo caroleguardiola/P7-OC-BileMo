@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Hateoas\Configuration\Annotation as Hateoas;
 
 
 /**
@@ -16,6 +16,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OsRepository")
  * @ORM\HasLifecycleCallbacks()
  *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "app_os_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "detail_os"})
+ * )
  */
 class Os
 {
@@ -33,7 +42,7 @@ class Os
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Groups({"detail_mobilephone", "detail_os"})
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)

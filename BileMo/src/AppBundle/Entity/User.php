@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 
 /**
  * User
@@ -15,6 +17,45 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "app_user_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *     ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ * )
+ *  @Hateoas\Relation(
+ *      "list",
+ *      href = @Hateoas\Route(
+ *          "app_users_list",
+ *          absolute = true
+ *     ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ * )
+ * @Hateoas\Relation(
+ *      "create",
+ *      href = @Hateoas\Route(
+ *          "app_user_create",
+ *          absolute = true
+ *     ),
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "app_user_delete",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *     ),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ * )
+ * @Hateoas\Relation(
+ *     "addresses",
+ *     embedded = @Hateoas\Embedded("expr(object.getAddresses())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_user"})
+ * )
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -35,7 +76,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="user_number", type="integer", unique=true, options={"unsigned":true})
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="integer")
      */
     private $userNumber;
@@ -46,7 +87,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -58,7 +99,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="first_name", type="string", length=255)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -70,7 +111,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="last_name", type="string", length=255)
      *
      * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      */
@@ -82,7 +123,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Email
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -93,7 +134,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @Serializer\Groups({"create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="string")
      * @Assert\Length(max=4096)
      */
@@ -110,7 +151,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      *
      * @Serializer\Groups({"detail_user", "create_user"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create_User"})
      * @Assert\Type(type="bool")
     */
     private $isActive;
@@ -127,7 +168,6 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Address", mappedBy="user", cascade={"persist","remove"})
      *
-     * @Serializer\Groups({"detail_user"})
      */
     private $addresses;
 
@@ -549,7 +589,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return bool
      */
-    public function getIsActive()
+    public function isActive()
     {
         return $this->isActive;
     }
