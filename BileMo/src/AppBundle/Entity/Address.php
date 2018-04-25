@@ -43,6 +43,8 @@ class Address
      * @ORM\Column(name="recipient", type="string", length=255)
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      */
@@ -54,6 +56,8 @@ class Address
      * @ORM\Column(name="street_address", type="string", length=255)
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -66,6 +70,8 @@ class Address
      * @ORM\Column(name="zip_code", type="string", length=5)
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=5)
@@ -78,6 +84,8 @@ class Address
      * @ORM\Column(name="city", type="string", length=255)
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -90,6 +98,8 @@ class Address
      * @ORM\Column(name="country", type="string", length=255)
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -108,6 +118,8 @@ class Address
      * @ORM\Column(name="is_active", type="boolean")
      *
      * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="bool")
      */

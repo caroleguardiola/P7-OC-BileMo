@@ -44,6 +44,8 @@ class Image
      * @ORM\Column(name="extension", type="string", length=45)
      *
      * @Serializer\Groups({"detail_mobilephone", "detail_image"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=45)
@@ -56,6 +58,8 @@ class Image
      * @ORM\Column(name="alt", type="string", length=255)
      *
      * @Serializer\Groups({"detail_mobilephone", "detail_image"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
