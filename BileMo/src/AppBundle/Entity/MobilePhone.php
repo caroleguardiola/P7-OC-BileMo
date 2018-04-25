@@ -59,6 +59,7 @@ class MobilePhone
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @Serializer\Groups({"list_mobilephones"})
+     * @Serializer\Since("1.0")
      *
      */
     private $id;
@@ -69,6 +70,8 @@ class MobilePhone
      * @ORM\Column(name="model", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -81,6 +84,8 @@ class MobilePhone
      * @ORM\Column(name="reference", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
@@ -93,6 +98,8 @@ class MobilePhone
      * @ORM\Column(name="capacity_gb", type="integer", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="int")
      */
@@ -104,6 +111,8 @@ class MobilePhone
      * @ORM\Column(name="display_inch", type="float", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="float")
      */
@@ -115,6 +124,8 @@ class MobilePhone
      * @ORM\Column(name="camera_mp", type="integer", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="int")
      */
@@ -126,6 +137,8 @@ class MobilePhone
      * @ORM\Column(name="color", type="string", length=45)
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=45)
@@ -138,6 +151,8 @@ class MobilePhone
      * @ORM\Column(name="description", type="text")
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      */
@@ -149,6 +164,8 @@ class MobilePhone
      * @ORM\Column(name="height_mm", type="float", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="float")
      */
@@ -160,6 +177,8 @@ class MobilePhone
      * @ORM\Column(name="width_mm", type="float", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="float")
      */
@@ -171,6 +190,8 @@ class MobilePhone
      * @ORM\Column(name="depth_mm", type="float", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="float")
      */
@@ -182,6 +203,8 @@ class MobilePhone
      * @ORM\Column(name="weight_grams", type="integer", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="int")
      */
@@ -193,6 +216,8 @@ class MobilePhone
      * @ORM\Column(name="price_euros", type="integer", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="int")
      */
@@ -204,6 +229,8 @@ class MobilePhone
      * @ORM\Column(name="price_cents", type="integer", options={"unsigned":true})
      *
      * @Serializer\Groups({"detail_mobilephone"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="int")
      */

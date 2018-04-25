@@ -43,6 +43,8 @@ class Brand
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
      * @Serializer\Groups({"detail_mobilephone", "detail_brand"})
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
