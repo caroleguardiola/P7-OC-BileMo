@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  *
  */
-class Customer
+class Customer extends BaseClient
 {
     /**
      * @var int
@@ -121,6 +122,7 @@ class Customer
      */
     public function __construct()
     {
+        parent::__construct();
         $this->dateCreation = new \Datetime();
         $this->users = new ArrayCollection();
     }
