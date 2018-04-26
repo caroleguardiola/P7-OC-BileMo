@@ -3,18 +3,18 @@
  * Created by PhpStorm.
  * User: Carole Guardiola
  * Date: 26/04/2018
- * Time: 17:53
+ * Time: 17:58
  */
 
 namespace AppBundle\Entity;
 
-use FOS\OAuthServerBundle\Entity\AccessToken as BaseAccessToken;
+use FOS\OAuthServerBundle\Entity\RefreshToken as BaseRefreshToken;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  */
-class AccessToken extends BaseAccessToken
+class RefreshToken extends BaseRefreshToken
 {
     /**
      * @ORM\Id
