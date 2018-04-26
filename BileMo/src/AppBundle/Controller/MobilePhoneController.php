@@ -50,7 +50,7 @@ class MobilePhoneController extends FOSRestController
      * )
      * @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"list_mobilephones"}
+     *     serializerGroups = {"Default","list_mobilephones"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)

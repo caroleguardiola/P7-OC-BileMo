@@ -55,7 +55,7 @@ class UserController extends FOSRestController
      * )
      *  @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"list_users"}
+     *     serializerGroups = {"Default", "list_users"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -131,6 +131,11 @@ class UserController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
+        foreach($user->getAddresses() as $address) {
+            $em->persist($address);
+        }
+
+        var_dump($user);die();
         $em->persist($user);
         $em->flush();
 

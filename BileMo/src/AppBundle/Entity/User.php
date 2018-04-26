@@ -143,6 +143,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     * @Serializer\Type("string")
      *
      * @Serializer\Groups({"create_user"})
      * @Serializer\Since("1.0")
@@ -157,6 +158,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=60, unique=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $password;
 
@@ -175,6 +178,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"}, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\NotBlank
      * @Assert\Valid()
      */
@@ -183,6 +188,8 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Address", mappedBy="user", cascade={"persist","remove"})
      *
+     * @Serializer\Groups({"none"})
+     *
      */
     private $addresses;
 
@@ -190,6 +197,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -197,6 +206,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedat", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -204,6 +215,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */

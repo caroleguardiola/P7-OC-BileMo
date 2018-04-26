@@ -22,7 +22,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone"})
  * )
  *  @Hateoas\Relation(
  *      "list",
@@ -30,22 +30,22 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "app_mobilephone_list",
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "brand",
  *     embedded = @Hateoas\Embedded("expr(object.getBrand())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "os",
  *     embedded = @Hateoas\Embedded("expr(object.getOs())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "images",
  *     embedded = @Hateoas\Embedded("expr(object.getImages())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  *
  */
@@ -239,12 +239,15 @@ class MobilePhone
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
      *
+     * @Serializer\Groups({"none"})
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\NotBlank
      * @Assert\Valid()
@@ -255,6 +258,8 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\NotBlank
      * @Assert\Valid()
      */
@@ -264,6 +269,8 @@ class MobilePhone
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -271,6 +278,8 @@ class MobilePhone
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -278,6 +287,8 @@ class MobilePhone
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */
