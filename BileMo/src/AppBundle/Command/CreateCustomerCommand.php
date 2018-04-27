@@ -58,7 +58,7 @@ EOT
 
         $output->writeln(
             sprintf(
-                'Added a new client with public id <info>%s</info>, secret <info>%s</info>',
+                'Added a new client with name <info>%s</info>, public id <info>%s</info>, secret <info>%s</info>',
                 $client->getName(),
                 $client->getPublicId(),
                 $client->getSecret()

@@ -12,11 +12,14 @@ use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="auth_code")
  * @ORM\Entity
  */
 class AuthCode extends BaseAuthCode
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
