@@ -30,6 +30,8 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating:
+         engines: ['twig', 'php']
 
 # Twig Configuration
 twig:
@@ -101,3 +103,15 @@ fos_rest:
 sensio_framework_extra:
 #   view: { annotations: false }
     request: { converters: true }
+
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        AppBundle\Entity\Customer
+    access_token_class:  AppBundle\Entity\AccessToken
+    refresh_token_class: AppBundle\Entity\RefreshToken
+    auth_code_class:     AppBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_provider.username
+        options:
+            access_token_lifetime: 3600
+            token_type: Bearer
