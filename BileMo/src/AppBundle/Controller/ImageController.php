@@ -20,7 +20,7 @@ class ImageController extends FOSRestController
      * @return array
      *
      * @Rest\Get(
-     *     path = "/images",
+     *     path = "/api/images",
      *     name = "app_images_list",
      * )
      *
@@ -41,7 +41,7 @@ class ImageController extends FOSRestController
      * @return Image
      *
      *  @Rest\Get(
-     *     path = "/images/{id}",
+     *     path = "/api/images/{id}",
      *     name = "app_image_show",
      *     requirements = {"id"="\d+"}
      * )

@@ -26,7 +26,7 @@ class UserController extends FOSRestController
      * @return Users
      *
      * @Rest\Get(
-     *     path = "/users",
+     *     path = "/api/users",
      *     name = "app_users_list",
      * )
      * @Rest\QueryParam(
@@ -75,7 +75,7 @@ class UserController extends FOSRestController
      * @return User
      *
      * @Rest\Get(
-     *     path = "/users/{id}",
+     *     path = "/api/users/{id}",
      *     name = "app_user_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -96,7 +96,7 @@ class UserController extends FOSRestController
      *
      * @throws ResourceValidationException
      * @Rest\Post(
-     *    path = "/users",
+     *    path = "/api/users",
      *    name = "app_user_create"
      * )
      * @Rest\View(
@@ -147,7 +147,7 @@ class UserController extends FOSRestController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Rest\Delete(
-     *     path="/users/{id}",
+     *     path="/api/users/{id}",
      *     name="app_user_delete",
      *     requirements={ "id"="\d+" }
      * )

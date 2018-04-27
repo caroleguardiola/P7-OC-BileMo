@@ -20,7 +20,7 @@ class AddressController extends FOSRestController
      * @return Address
      *
      * @Rest\Get(
-     *     path = "/addresses/{id}",
+     *     path = "/api/addresses/{id}",
      *     name = "app_address_show",
      *     requirements = {"id"="\d+"}
      * )

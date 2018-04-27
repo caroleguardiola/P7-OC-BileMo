@@ -20,7 +20,7 @@ class OsController extends FOSRestController
      * @return Os
      *
      * @Rest\Get(
-     *     path = "/os/{id}",
+     *     path = "/api/os/{id}",
      *     name = "app_os_show",
      *     requirements = {"id"="\d+"}
      * )

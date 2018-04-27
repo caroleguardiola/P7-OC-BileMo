@@ -20,7 +20,7 @@ class BrandController extends FOSRestController
      * @return Brand
      *
      * @Rest\Get(
-     *     path = "/brands/{id}",
+     *     path = "/api/brands/{id}",
      *     name = "app_brand_show",
      *     requirements = {"id"="\d+"}
      * )
