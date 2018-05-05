@@ -37,7 +37,7 @@ class AddressController extends FOSRestController
      *     name="limit",
      *     requirements="\d+",
      *     default="15",
-     *     description="Max number of addresses phones per page."
+     *     description="Max number of addresses per page."
      * )
      * @Rest\QueryParam(
      *     name="offset",
@@ -47,7 +47,7 @@ class AddressController extends FOSRestController
      * )
      *  @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"Default", "list_users"}
+     *     serializerGroups = {"Default", "list_users", "list_addresses"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)

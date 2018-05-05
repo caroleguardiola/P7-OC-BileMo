@@ -24,7 +24,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *     ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_user", "list_users", "create_user", "detail_address"})
  * )
  *  @Hateoas\Relation(
  *      "list",
@@ -76,7 +76,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Serializer\Groups({"list_users", "detail_user", "create_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank(groups={"Create_User"})

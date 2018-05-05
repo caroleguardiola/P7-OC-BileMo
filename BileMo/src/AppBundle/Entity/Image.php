@@ -23,7 +23,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "detail_image"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "list_images", "detail_image"})
+ * )
+ * @Hateoas\Relation(
+ *     "mobilephones",
+ *     embedded = @Hateoas\Embedded("expr(object.getMobilePhone())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_image"})
  * )
  */
 class Image
@@ -35,6 +40,8 @@ class Image
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
+     * @Serializer\Groups({"list_images"})
+     *
      */
     private $id;
 
@@ -43,7 +50,7 @@ class Image
      *
      * @ORM\Column(name="extension", type="string", length=45)
      *
-     * @Serializer\Groups({"detail_mobilephone", "detail_image"})
+     * @Serializer\Groups({"detail_mobilephone", "list_images", "detail_image"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -57,7 +64,7 @@ class Image
      *
      * @ORM\Column(name="alt", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_mobilephone", "detail_image"})
+     * @Serializer\Groups({"detail_mobilephone", "list_images", "detail_image"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -69,15 +76,22 @@ class Image
     /**
      * @var UploadedFile
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\Image()
      */
     private $file;
 
+    /**
+     * @Serializer\Groups({"none"})
+     */
     private $tempFilename;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MobilePhone", cascade={"persist"}, inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\NotBlank
      * @Assert\Valid()
@@ -88,6 +102,8 @@ class Image
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -95,6 +111,8 @@ class Image
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -102,6 +120,8 @@ class Image
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */

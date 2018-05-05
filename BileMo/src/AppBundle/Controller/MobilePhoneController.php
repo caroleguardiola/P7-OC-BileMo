@@ -24,7 +24,7 @@ class MobilePhoneController extends FOSRestController
      *
      * @Rest\Get(
      *     path = "/api/mobilephones",
-     *     name = "app_mobilephone_list",
+     *     name = "app_mobilephones_list",
      * )
      *  @Rest\QueryParam(
      *     name="keyword",

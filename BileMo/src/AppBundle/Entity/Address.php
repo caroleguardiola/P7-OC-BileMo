@@ -22,7 +22,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"create_user", "detail_address", "detail_user"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"create_user", "list_addresses", "detail_address", "detail_user"})
+ * )
+ * @Hateoas\Relation(
+ *     "user",
+ *     embedded = @Hateoas\Embedded("expr(object.getUser())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_address"})
  * )
  */
 class Address
@@ -34,6 +39,8 @@ class Address
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
+     * @Serializer\Groups({"list_addresses"})
+     *
      */
     private $id;
 
@@ -42,7 +49,7 @@ class Address
      *
      * @ORM\Column(name="recipient", type="string", length=255)
      *
-     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "list_addresses", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -110,6 +117,8 @@ class Address
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"}, inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false)
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\Valid()
      */
     private $user;
@@ -129,6 +138,8 @@ class Address
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -136,6 +147,8 @@ class Address
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -143,6 +156,8 @@ class Address
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */

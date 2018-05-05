@@ -9,13 +9,57 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Image;
+use AppBundle\Representation\Images;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
 
 
 class ImageController extends FOSRestController
 {
+    /**
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Images
+     *
+     * @Rest\Get(
+     *     path = "/api/images",
+     *     name = "app_images_list",
+     * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of images per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="0",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View(
+     *     statusCode = 200,
+     *     serializerGroups = {"Default","list_images"}
+     * )
+     */
+    public function listAction(ParamFetcherInterface $paramFetcher)
+    {
+        $pager = $this->getDoctrine()->getRepository('AppBundle:Image')->search(
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
+
+        return new Images($pager);
+    }
+
     /**
      * @param Image $image
      * @return Image

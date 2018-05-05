@@ -23,7 +23,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "detail_brand"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "list_brands", "detail_brand"})
+ * )
+ * @Hateoas\Relation(
+ *     "mobilephones",
+ *     embedded = @Hateoas\Embedded("expr(object.getMobilePhones())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_brand"})
  * )
  */
 class Brand
@@ -34,6 +39,8 @@ class Brand
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"list_brands"})
      */
     private $id;
 
@@ -42,7 +49,7 @@ class Brand
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"detail_mobilephone", "detail_brand"})
+     * @Serializer\Groups({"detail_mobilephone", "list_brands", "detail_brand"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -53,6 +60,8 @@ class Brand
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MobilePhone", mappedBy="brand", cascade={"persist","remove"})
+     *
+     * @Serializer\Groups({"none"})
      */
     private $mobilePhones;
     
@@ -60,6 +69,8 @@ class Brand
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -67,6 +78,8 @@ class Brand
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -77,6 +90,7 @@ class Brand
      *
      * @Assert\DateTime()
      *
+     * @Serializer\Groups({"none"})
      */
     private $dateDeactivation;
 

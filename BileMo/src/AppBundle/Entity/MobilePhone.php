@@ -22,12 +22,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone", "detail_brand", "detail_os", "detail_image"})
  * )
  *  @Hateoas\Relation(
  *      "list",
  *      href = @Hateoas\Route(
- *          "app_mobilephone_list",
+ *          "app_mobilephones_list",
  *          absolute = true
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone"})
@@ -69,7 +69,7 @@ class MobilePhone
      *
      * @ORM\Column(name="model", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone", "detail_brand", "detail_os", "detail_image"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
