@@ -22,6 +22,11 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
         $this
             ->setName('bilemo-api:oauth-server:client:create')
             ->setDescription('Creates a new OAuth client BileMo')
+            ->addArgument(
+                'username',
+                InputArgument::REQUIRED,
+                'OAuth Client Username?'
+            )
             ;
     }
 
@@ -29,13 +34,15 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
     {
         $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');
         $client = $clientManager->createClient();
+        $client->setUsername($input->getArgument('username'));
         $client->setRedirectUris(array('http://localhost/P7/P7_OC_BileMo/BileMo/web/app_dev.php/'));
         $client->setAllowedGrantTypes(array('password', 'refresh_token', 'authorization_code'));
         $clientManager->updateClient($client);
 
         $output->writeln(
             sprintf(
-                'Added a new OAuth client BileMo with public id <info>%s</info>, secret <info>%s</info>',
+                'Added a new OAuth client BileMo with name <info>%s</info>, public id <info>%s</info>, secret <info>%s</info>',
+                $client->getUsername(),
                 $client->getPublicId(),
                 $client->getSecret()
             )

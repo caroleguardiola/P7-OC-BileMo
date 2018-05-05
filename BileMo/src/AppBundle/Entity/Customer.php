@@ -78,30 +78,6 @@ class Customer extends BaseUser
     }
 
     /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Customer
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set dateCreation.
      *
      * @param \DateTime $dateCreation

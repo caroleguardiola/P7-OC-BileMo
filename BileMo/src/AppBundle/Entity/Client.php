@@ -12,7 +12,7 @@ use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
  */
 class Client extends BaseClient
 {
@@ -23,9 +23,41 @@ class Client extends BaseClient
      */
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=180)
+     *
+     */
+    protected $username;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    /**
+     * Set username.
+     *
+     * @param string $username
+     *
+     * @return Client
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }
