@@ -10,37 +10,19 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Image;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
+use AppBundle\Exception\ResourceNotFoundException;
 
 
 class ImageController extends FOSRestController
 {
     /**
-     * @return array
-     *
-     * @Rest\Get(
-     *     path = "/api/images",
-     *     name = "app_images_list",
-     * )
-     *
-     * @Rest\View(
-     *     statusCode = 200,
-     *     serializerGroups = {"list_images"}
-     * )
-     */
-    public function listAction()
-    {
-        $images = $this->getDoctrine()->getRepository('AppBundle:Image')->findAll();
-
-        return $images;
-    }
-
-    /**
      * @param Image $image
      * @return Image
      *
-     *  @Rest\Get(
+     * @throws ResourceNotFoundException
+     *
+     * @Rest\Get(
      *     path = "/api/images/{id}",
      *     name = "app_image_show",
      *     requirements = {"id"="\d+"}
@@ -50,8 +32,12 @@ class ImageController extends FOSRestController
      *     serializerGroups = {"detail_image"}
      * )
      */
-    public function showAction(Image $image)
+    public function showAction(Image $image=null)
     {
+        if (empty($image)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         return $image;
     }
 }

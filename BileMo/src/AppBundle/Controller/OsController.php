@@ -10,14 +10,17 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Os;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
+use AppBundle\Exception\ResourceNotFoundException;
+
 
 class OsController extends FOSRestController
 {
     /**
      * @param Os $os
      * @return Os
+     *
+     * @throws ResourceNotFoundException
      *
      * @Rest\Get(
      *     path = "/api/os/{id}",
@@ -29,8 +32,12 @@ class OsController extends FOSRestController
      *     serializerGroups = {"detail_os"}
      * )
      */
-    public function showAction(Os $os)
+    public function showAction(Os $os=null)
     {
+        if (empty($os)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         return $os;
     }
 }

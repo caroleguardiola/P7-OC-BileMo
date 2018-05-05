@@ -22,7 +22,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_address", "detail_user"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"create_user", "detail_address", "detail_user"})
  * )
  */
 class Address
@@ -42,7 +42,7 @@ class Address
      *
      * @ORM\Column(name="recipient", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -55,7 +55,7 @@ class Address
      *
      * @ORM\Column(name="street_address", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -69,7 +69,7 @@ class Address
      *
      * @ORM\Column(name="zip_code", type="string", length=5)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -83,7 +83,7 @@ class Address
      *
      * @ORM\Column(name="city", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -97,7 +97,7 @@ class Address
      *
      * @ORM\Column(name="country", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -117,7 +117,7 @@ class Address
     /**
      * @ORM\Column(name="is_active", type="boolean")
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank

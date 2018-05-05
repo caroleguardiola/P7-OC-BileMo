@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use FOS\OAuthServerBundle\Entity\Client as BaseClient;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  *
  */
-class Customer extends BaseClient
+class Customer extends BaseUser
 {
     /**
      * @var int
@@ -27,17 +27,6 @@ class Customer extends BaseClient
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     */
-    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="customer", cascade={"persist","remove"})

@@ -54,7 +54,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *     "addresses",
  *     embedded = @Hateoas\Embedded("expr(object.getAddresses())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"detail_user"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_user", "create_user"})
  * )
  */
 class User implements AdvancedUserInterface, \Serializable
@@ -70,19 +70,6 @@ class User implements AdvancedUserInterface, \Serializable
      * @Serializer\Since("1.0")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_number", type="integer", unique=true, options={"unsigned":true})
-     *
-     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
-     * @Serializer\Since("1.0")
-     *
-     * @Assert\NotBlank(groups={"Create_User"})
-     * @Assert\Type(type="integer")
-     */
-    private $userNumber;
 
     /**
      * @var string
@@ -103,7 +90,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="first_name", type="string", length=255)
      *
-     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Serializer\Groups({"detail_user", "create_user"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank(groups={"Create_User"})
@@ -111,13 +98,12 @@ class User implements AdvancedUserInterface, \Serializable
      * @Assert\Length(max=255)
      */
     private $firstName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
      *
-     * @Serializer\Groups({"list_users", "detail_user", "create_user"})
+     * @Serializer\Groups({"detail_user", "create_user"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank(groups={"Create_User"})
@@ -142,17 +128,14 @@ class User implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
-     * @var string
-     * @Serializer\Type("string")
+     * @ORM\Column(name="is_active", type="boolean")
      *
-     * @Serializer\Groups({"create_user"})
+     * @Serializer\Groups({"detail_user", "create_user"})
      * @Serializer\Since("1.0")
      *
-     * @Assert\NotBlank(groups={"Create_User"})
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=4096)
+     * @Assert\Type(type="bool")
      */
-    private $plainPassword;
+    private $isActive;
 
     /**
      * @var string
@@ -164,15 +147,18 @@ class User implements AdvancedUserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @var string
      *
-     * @Serializer\Groups({"detail_user", "create_user"})
+     * @Serializer\Type("string")
+     *
+     * @Serializer\Groups({"none"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank(groups={"Create_User"})
-     * @Assert\Type(type="bool")
-    */
-    private $isActive;
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"}, inversedBy="users")
@@ -180,7 +166,6 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @Serializer\Groups({"none"})
      *
-     * @Assert\NotBlank
      * @Assert\Valid()
      */
     private $customer;
@@ -189,7 +174,6 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Address", mappedBy="user", cascade={"persist","remove"})
      *
      * @Serializer\Groups({"none"})
-     *
      */
     private $addresses;
 
@@ -228,6 +212,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function __construct()
     {
+        parent::__construct();
         $this->dateCreation = new \Datetime();
         $this->addresses = new ArrayCollection();
         $this->isActive = true;
@@ -244,30 +229,6 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set userNumber.
-     *
-     * @param int $userNumber
-     *
-     * @return User
-     */
-    public function setUserNumber($userNumber)
-    {
-        $this->userNumber = $userNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get userNumber.
-     *
-     * @return int
-     */
-    public function getUserNumber()
-    {
-        return $this->userNumber;
-    }
-
-    /**
      * Set username.
      *
      * @param string $username
@@ -277,10 +238,8 @@ class User implements AdvancedUserInterface, \Serializable
     public function setUsername($username)
     {
         $this->username = $username;
-
         return $this;
     }
-
     /**
      * Get username.
      *
@@ -349,10 +308,8 @@ class User implements AdvancedUserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
-
     /**
      * Get email.
      *
@@ -362,12 +319,10 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->email;
     }
-
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
-
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
@@ -383,10 +338,8 @@ class User implements AdvancedUserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
-
     /**
      * Get password.
      *
@@ -553,7 +506,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function eraseCredentials()
     {
     }
-
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -565,7 +517,6 @@ class User implements AdvancedUserInterface, \Serializable
             // see section on salt below
         ));
     }
-
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
@@ -577,27 +528,22 @@ class User implements AdvancedUserInterface, \Serializable
             // see section on salt below
             ) = unserialize($serialized);
     }
-
     public function isAccountNonExpired()
     {
         return true;
     }
-
     public function isAccountNonLocked()
     {
         return true;
     }
-
     public function isCredentialsNonExpired()
     {
         return true;
     }
-
     public function isEnabled()
     {
         return $this->isActive;
     }
-
     /**
      * Set isActive.
      *
@@ -608,10 +554,8 @@ class User implements AdvancedUserInterface, \Serializable
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
-
         return $this;
     }
-
     /**
      * Get isActive.
      *

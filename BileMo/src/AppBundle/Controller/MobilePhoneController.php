@@ -13,6 +13,8 @@ use AppBundle\Representation\MobilePhones;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use AppBundle\Exception\ResourceNotFoundException;
+
 
 class MobilePhoneController extends FOSRestController
 {
@@ -69,6 +71,8 @@ class MobilePhoneController extends FOSRestController
      * @param MobilePhone $mobilephone
      * @return MobilePhone
      *
+     * @throws ResourceNotFoundException
+     *
      * @Rest\Get(
      *     path = "/api/mobilephones/{id}",
      *     name = "app_mobilephone_show",
@@ -79,8 +83,12 @@ class MobilePhoneController extends FOSRestController
      *     serializerGroups = {"detail_mobilephone"}
      * )
      */
-    public function showAction(MobilePhone $mobilephone)
+    public function showAction(MobilePhone $mobilephone=null)
     {
+        if (empty($mobilephone)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         return $mobilephone;
     }
 }
