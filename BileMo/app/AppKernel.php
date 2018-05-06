@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new AppBundle\AppBundle(),
         ];
 

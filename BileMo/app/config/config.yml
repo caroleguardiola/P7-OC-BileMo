@@ -124,3 +124,11 @@ fos_oauth_server:
             access_token_lifetime: 3600
             token_type: Bearer
             supported_scopes: customer
+
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+        host_patterns:
+            - ^api\.
+
