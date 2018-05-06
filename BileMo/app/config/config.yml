@@ -131,4 +131,16 @@ nelmio_api_doc:
             - ^/api(?!/doc$)
         host_patterns:
             - ^api\.
-
+    documentation:
+        info:
+            title: BileMo API Documentation
+            description: API for Bilemo's Mobile Phones and users of BileMo's customers
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: oauth2
+                tokenUrl: ^/oauth/v2/token
+                flow: password
+                in: header
+        security:
+            - Bearer: []
