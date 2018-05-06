@@ -23,7 +23,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "detail_os"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone", "list_os", "detail_os"})
+ * )
+ * @Hateoas\Relation(
+ *     "mobilephones",
+ *     embedded = @Hateoas\Embedded("expr(object.getMobilePhones())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_os"})
  * )
  */
 class Os
@@ -34,6 +39,8 @@ class Os
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"list_os"})
      */
     private $id;
 
@@ -42,7 +49,7 @@ class Os
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"detail_mobilephone", "detail_os"})
+     * @Serializer\Groups({"detail_mobilephone", "list_os", "detail_os"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -53,6 +60,8 @@ class Os
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MobilePhone", mappedBy="os", cascade={"persist","remove"})
+     *
+     * @Serializer\Groups({"none"})
      */
     private $mobilePhones;
 
@@ -60,6 +69,8 @@ class Os
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -67,6 +78,8 @@ class Os
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -74,6 +87,8 @@ class Os
      * @var \DateTime|null
      *
      * @ORM\Column(name="dateDeactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */
@@ -127,7 +142,7 @@ class Os
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTime $dateCreation
      *
      * @return Os
      */
@@ -141,7 +156,7 @@ class Os
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTime
      */
     public function getDateCreation()
     {
@@ -159,7 +174,7 @@ class Os
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTime|null $updatedAt
      *
      * @return Os
      */
@@ -173,7 +188,7 @@ class Os
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -183,7 +198,7 @@ class Os
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTime|null $dateDeactivation
      *
      * @return Os
      */
@@ -197,7 +212,7 @@ class Os
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getDateDeactivation()
     {

@@ -13,6 +13,8 @@ use AppBundle\Representation\MobilePhones;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use AppBundle\Exception\ResourceNotFoundException;
+
 
 class MobilePhoneController extends FOSRestController
 {
@@ -21,8 +23,8 @@ class MobilePhoneController extends FOSRestController
      * @return MobilePhones
      *
      * @Rest\Get(
-     *     path = "/mobilephones",
-     *     name = "app_mobilephone_list",
+     *     path = "/api/mobilephones",
+     *     name = "app_mobilephones_list",
      * )
      *  @Rest\QueryParam(
      *     name="keyword",
@@ -50,7 +52,7 @@ class MobilePhoneController extends FOSRestController
      * )
      * @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"list_mobilephones"}
+     *     serializerGroups = {"Default","list_mobilephones"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -69,8 +71,10 @@ class MobilePhoneController extends FOSRestController
      * @param MobilePhone $mobilephone
      * @return MobilePhone
      *
+     * @throws ResourceNotFoundException
+     *
      * @Rest\Get(
-     *     path = "/mobilephones/{id}",
+     *     path = "/api/mobilephones/{id}",
      *     name = "app_mobilephone_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -79,8 +83,12 @@ class MobilePhoneController extends FOSRestController
      *     serializerGroups = {"detail_mobilephone"}
      * )
      */
-    public function showAction(MobilePhone $mobilephone)
+    public function showAction(MobilePhone $mobilephone=null)
     {
+        if (empty($mobilephone)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         return $mobilephone;
     }
 }

@@ -30,6 +30,8 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating:
+         engines: ['twig', 'php']
 
 # Twig Configuration
 twig:
@@ -86,9 +88,9 @@ fos_rest:
         enabled: true
         exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
-           { AppBundle\Exception\ResourceValidationException: 400, \Exception: 500 }
+           { AppBundle\Exception\ResourceValidationException: 400, AppBundle\Exception\ResourceNotFoundException: 404, AppBundle\Exception\ResourceAccessForbiddenException: 403,\Exception: 500 }
         messages:
-           { AppBundle\Exception\ResourceValidationException: true }
+           { AppBundle\Exception\ResourceValidationException: true, AppBundle\Exception\ResourceNotFoundException: true, AppBundle\Exception\ResourceAccessForbiddenException: true }
     versioning:
         enabled: true
         resolvers:
@@ -101,3 +103,24 @@ fos_rest:
 sensio_framework_extra:
 #   view: { annotations: false }
     request: { converters: true }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\Customer
+    from_email:
+        address: contact@bilemo.com
+        sender_name: bilemo
+
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        AppBundle\Entity\Client
+    access_token_class:  AppBundle\Entity\AccessToken
+    refresh_token_class: AppBundle\Entity\RefreshToken
+    auth_code_class:     AppBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_provider.username
+        options:
+            access_token_lifetime: 3600
+            token_type: Bearer
+            supported_scopes: customer

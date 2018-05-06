@@ -9,39 +9,65 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Image;
+use AppBundle\Representation\Images;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
+use AppBundle\Exception\ResourceNotFoundException;
 
 
 class ImageController extends FOSRestController
 {
     /**
-     * @return array
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Images
      *
      * @Rest\Get(
-     *     path = "/images",
+     *     path = "/api/images",
      *     name = "app_images_list",
      * )
-     *
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of images per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="0",
+     *     description="The pagination offset"
+     * )
      * @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"list_images"}
+     *     serializerGroups = {"Default","list_images"}
      * )
      */
-    public function listAction()
+    public function listAction(ParamFetcherInterface $paramFetcher)
     {
-        $images = $this->getDoctrine()->getRepository('AppBundle:Image')->findAll();
+        $pager = $this->getDoctrine()->getRepository('AppBundle:Image')->search(
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
 
-        return $images;
+        return new Images($pager);
     }
 
     /**
      * @param Image $image
      * @return Image
      *
-     *  @Rest\Get(
-     *     path = "/images/{id}",
+     * @throws ResourceNotFoundException
+     *
+     * @Rest\Get(
+     *     path = "/api/images/{id}",
      *     name = "app_image_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -50,8 +76,12 @@ class ImageController extends FOSRestController
      *     serializerGroups = {"detail_image"}
      * )
      */
-    public function showAction(Image $image)
+    public function showAction(Image $image=null)
     {
+        if (empty($image)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         return $image;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  *
  */
-class Customer
+class Customer extends BaseUser
 {
     /**
      * @var int
@@ -25,67 +26,7 @@ class Customer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="customer_number", type="integer", unique=true, options={"unsigned":true})
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="int")
-     */
-    private $customerNumber;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
-     *
-     * @Assert\NotBlank
-     * @Assert\Email
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=60, unique=true)
-     */
-    private $password;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="customer", cascade={"persist","remove"})
@@ -121,6 +62,7 @@ class Customer
      */
     public function __construct()
     {
+        parent::__construct();
         $this->dateCreation = new \Datetime();
         $this->users = new ArrayCollection();
     }
@@ -136,129 +78,9 @@ class Customer
     }
 
     /**
-     * Set customerNumber.
-     *
-     * @param int $customerNumber
-     *
-     * @return Customer
-     */
-    public function setCustomerNumber($customerNumber)
-    {
-        $this->customerNumber = $customerNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get customerNumber.
-     *
-     * @return int
-     */
-    public function getCustomerNumber()
-    {
-        return $this->customerNumber;
-    }
-
-    /**
-     * Set username.
-     *
-     * @param string $username
-     *
-     * @return Customer
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Customer
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set email.
-     *
-     * @param string $email
-     *
-     * @return Customer
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set password.
-     *
-     * @param string $password
-     *
-     * @return Customer
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTime $dateCreation
      *
      * @return Customer
      */
@@ -272,7 +94,7 @@ class Customer
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTime
      */
     public function getDateCreation()
     {
@@ -290,7 +112,7 @@ class Customer
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTime|null $updatedAt
      *
      * @return Customer
      */
@@ -304,7 +126,7 @@ class Customer
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -314,7 +136,7 @@ class Customer
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTime|null $dateDeactivation
      *
      * @return Customer
      */
@@ -328,7 +150,7 @@ class Customer
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getDateDeactivation()
     {

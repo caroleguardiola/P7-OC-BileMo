@@ -18,6 +18,9 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Exception\ResourceValidationException;
+use AppBundle\Exception\ResourceNotFoundException;
+use AppBundle\Exception\ResourceAccessForbiddenException;
+
 
 class UserController extends FOSRestController
 {
@@ -26,7 +29,7 @@ class UserController extends FOSRestController
      * @return Users
      *
      * @Rest\Get(
-     *     path = "/users",
+     *     path = "/api/users",
      *     name = "app_users_list",
      * )
      * @Rest\QueryParam(
@@ -45,7 +48,7 @@ class UserController extends FOSRestController
      *     name="limit",
      *     requirements="\d+",
      *     default="15",
-     *     description="Max number of mobile phones per page."
+     *     description="Max number of users per page."
      * )
      * @Rest\QueryParam(
      *     name="offset",
@@ -55,12 +58,15 @@ class UserController extends FOSRestController
      * )
      *  @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"list_users"}
+     *     serializerGroups = {"Default", "list_users"}
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
+        $customer = $this->getUser();
+
         $pager = $this->getDoctrine()->getRepository('AppBundle:User')->search(
+            $customer,
             $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
@@ -74,8 +80,11 @@ class UserController extends FOSRestController
      * @param User $user
      * @return User
      *
+     * @throws ResourceNotFoundException
+     * @throws ResourceAccessForbiddenException
+     *
      * @Rest\Get(
-     *     path = "/users/{id}",
+     *     path = "/api/users/{id}",
      *     name = "app_user_show",
      *     requirements = {"id"="\d+"}
      * )
@@ -84,8 +93,18 @@ class UserController extends FOSRestController
      *     serializerGroups = {"detail_user"}
      * )
      */
-    public function showAction(User $user)
+    public function showAction(User $user=null)
     {
+        $customer = $this->getUser();
+
+        if (empty($user)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
+        if($customer !== $user->getCustomer()){
+            throw new ResourceAccessForbiddenException('You don\'t have the permission to access to this resource.');
+        }
+
         return $user;
     }
 
@@ -96,7 +115,7 @@ class UserController extends FOSRestController
      *
      * @throws ResourceValidationException
      * @Rest\Post(
-     *    path = "/users",
+     *    path = "/api/users",
      *    name = "app_user_create"
      * )
      * @Rest\View(
@@ -122,8 +141,13 @@ class UserController extends FOSRestController
             throw new ResourceValidationException($message);
         }
 
-        $user->setDateCreation(new \DateTime());
+        $customer = $this->getUser();
 
+        $user
+            ->setDateCreation(new \DateTime())
+            ->setIsActive(true)
+            ->setCustomer($customer)
+        ;
         $passwordEncoder = $this->get('security.password_encoder');
 
         $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -131,27 +155,52 @@ class UserController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
+        foreach($user->getAddresses() as $address) {
+            $address->setUser($user);
+            $address
+                ->setDateCreation(new \DateTime())
+                ->setIsActive(true)
+            ;
+        }
+
         $em->persist($user);
         $em->flush();
 
-        return $this->view($user, Response::HTTP_CREATED, ['Location' => $this->generateUrl('app_user_show', ['id' => $user->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+        return $this->view(
+            $user,
+            Response::HTTP_CREATED,
+            ['Location' => $this->generateUrl('app_user_show', ['id' => $user->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]
+        );
     }
 
     /**
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
+     * @throws ResourceNotFoundException
+     * @throws ResourceAccessForbiddenException
+     *
      * @Rest\Delete(
-     *     path="/users/{id}",
+     *     path="/api/users/{id}",
      *     name="app_user_delete",
      *     requirements={ "id"="\d+" }
      * )
      * @Rest\View(StatusCode=200)
      */
-    public function deleteAction(User $user)
+    public function deleteAction(User $user=null)
     {
+        if (empty($user)){
+            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $userdelete = $em->getRepository('AppBundle:User')->find($user);
+
+        $customer = $this->getUser();
+
+        if($customer !== $user->getCustomer()){
+            throw new ResourceAccessForbiddenException('You don\'t have the permission to access to this resource.');
+        }
 
         $em->remove($userdelete);
         $em->flush();

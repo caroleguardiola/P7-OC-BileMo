@@ -10,11 +10,13 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends AbstractRepository
 {
-    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    public function search($id, $term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('u')
             ->select('u')
+            ->where('u.customer = :id')
+            ->setParameter('id', $id)
             ->orderBy('u.username', $order)
         ;
         if ($term) {

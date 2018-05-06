@@ -22,30 +22,30 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone", "detail_brand", "detail_os", "detail_image"})
  * )
  *  @Hateoas\Relation(
  *      "list",
  *      href = @Hateoas\Route(
- *          "app_mobilephone_list",
+ *          "app_mobilephones_list",
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"list_mobilephones", "detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "brand",
  *     embedded = @Hateoas\Embedded("expr(object.getBrand())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "os",
  *     embedded = @Hateoas\Embedded("expr(object.getOs())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  * @Hateoas\Relation(
  *     "images",
  *     embedded = @Hateoas\Embedded("expr(object.getImages())"),
- *     exclusion = @Hateoas\Exclusion(groups = {"list_mobilephone", "detail_mobilephone"})
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_mobilephone"})
  * )
  *
  */
@@ -69,7 +69,7 @@ class MobilePhone
      *
      * @ORM\Column(name="model", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone"})
+     * @Serializer\Groups({"list_mobilephones", "detail_mobilephone", "detail_brand", "detail_os", "detail_image"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -239,12 +239,15 @@ class MobilePhone
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="mobilePhone", cascade={"persist","remove"})
      *
+     * @Serializer\Groups({"none"})
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\NotBlank
      * @Assert\Valid()
@@ -255,6 +258,8 @@ class MobilePhone
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", inversedBy="mobilePhones")
      * @ORM\JoinColumn(nullable=false)
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\NotBlank
      * @Assert\Valid()
      */
@@ -264,6 +269,8 @@ class MobilePhone
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -271,6 +278,8 @@ class MobilePhone
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -278,6 +287,8 @@ class MobilePhone
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */
@@ -618,7 +629,7 @@ class MobilePhone
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTime $dateCreation
      *
      * @return MobilePhone
      */
@@ -632,7 +643,7 @@ class MobilePhone
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTime
      */
     public function getDateCreation()
     {
@@ -650,7 +661,7 @@ class MobilePhone
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTime|null $updatedAt
      *
      * @return MobilePhone
      */
@@ -664,7 +675,7 @@ class MobilePhone
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -674,7 +685,7 @@ class MobilePhone
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTime|null $dateDeactivation
      *
      * @return MobilePhone
      */
@@ -688,7 +699,7 @@ class MobilePhone
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getDateDeactivation()
     {

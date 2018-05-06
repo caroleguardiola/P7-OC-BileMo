@@ -22,7 +22,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = {"detail_address", "detail_user"})
+ *      exclusion = @Hateoas\Exclusion(groups = {"create_user", "list_addresses", "detail_address", "detail_user"})
+ * )
+ * @Hateoas\Relation(
+ *     "user",
+ *     embedded = @Hateoas\Embedded("expr(object.getUser())"),
+ *     exclusion = @Hateoas\Exclusion(groups = {"detail_address"})
  * )
  */
 class Address
@@ -34,6 +39,8 @@ class Address
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
+     * @Serializer\Groups({"list_addresses"})
+     *
      */
     private $id;
 
@@ -42,7 +49,7 @@ class Address
      *
      * @ORM\Column(name="recipient", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "list_addresses", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -55,7 +62,7 @@ class Address
      *
      * @ORM\Column(name="street_address", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -69,7 +76,7 @@ class Address
      *
      * @ORM\Column(name="zip_code", type="string", length=5)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -83,7 +90,7 @@ class Address
      *
      * @ORM\Column(name="city", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -97,7 +104,7 @@ class Address
      *
      * @ORM\Column(name="country", type="string", length=255)
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -110,6 +117,8 @@ class Address
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"}, inversedBy="addresses")
      * @ORM\JoinColumn(nullable=false)
      *
+     * @Serializer\Groups({"none"})
+     *
      * @Assert\Valid()
      */
     private $user;
@@ -117,7 +126,7 @@ class Address
     /**
      * @ORM\Column(name="is_active", type="boolean")
      *
-     * @Serializer\Groups({"detail_user", "detail_address"})
+     * @Serializer\Groups({"create_user", "detail_user", "detail_address"})
      * @Serializer\Since("1.0")
      *
      * @Assert\NotBlank
@@ -129,6 +138,8 @@ class Address
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
@@ -136,6 +147,8 @@ class Address
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
@@ -143,6 +156,8 @@ class Address
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"none"})
      *
      * @Assert\DateTime()
      */
@@ -291,7 +306,7 @@ class Address
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTime $dateCreation
      *
      * @return Address
      */
@@ -305,7 +320,7 @@ class Address
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTime
      */
     public function getDateCreation()
     {
@@ -323,7 +338,7 @@ class Address
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTime|null $updatedAt
      *
      * @return Address
      */
@@ -337,7 +352,7 @@ class Address
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -347,7 +362,7 @@ class Address
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTime|null $dateDeactivation
      *
      * @return Address
      */
@@ -361,7 +376,7 @@ class Address
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTime|null
      */
     public function getDateDeactivation()
     {
