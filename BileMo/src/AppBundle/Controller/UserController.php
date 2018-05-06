@@ -48,7 +48,7 @@ class UserController extends FOSRestController
      *     name="limit",
      *     requirements="\d+",
      *     default="15",
-     *     description="Max number of mobile phones per page."
+     *     description="Max number of users per page."
      * )
      * @Rest\QueryParam(
      *     name="offset",
@@ -155,26 +155,14 @@ class UserController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        //$listAddresses = $user->getAddresses();
-        //foreach ($listAddresses as $address)
-        //{
-        //    $user->addAddress($address);
-        //    $address
-        //        ->setDateCreation(new \DateTime())
-        //        ->setIsActive(true)
-        //    ;
-        //}
-
         foreach($user->getAddresses() as $address) {
             $address->setUser($user);
             $address
                 ->setDateCreation(new \DateTime())
                 ->setIsActive(true)
             ;
-        //    $em->persist($address);
         }
 
-        //var_dump($user);die();
         $em->persist($user);
         $em->flush();
 
