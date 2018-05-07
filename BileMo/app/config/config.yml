@@ -129,18 +129,69 @@ nelmio_api_doc:
     areas:
         path_patterns: # an array of regexps
             - ^/api(?!/doc$)
-        host_patterns:
-            - ^api\.
     documentation:
         info:
             title: BileMo API Documentation
-            description: API for Bilemo's Mobile Phones and users of BileMo's customers
+            description: |
+                API for Bilemo's Mobile Phones and users of BileMo's customers.
+
+                To access to the resources you must be authicanted with an access token.
             version: 1.0.0
-        securityDefinitions:
-            Bearer:
-                type: oauth2
-                tokenUrl: ^/oauth/v2/token
-                flow: password
-                in: header
-        security:
-            - Bearer: []
+        definitions:
+            Authentication:
+              type: object
+              properties:
+                grant_type:
+                  type: "string"
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+            AccessToken:
+              type: object
+              properties:
+                access_token:
+                  type: "string"
+                expires_in:
+                  type: "integer"
+                token_type:
+                  type: "string"
+                scope:
+                  type: "string"
+                refresh_token:
+                  type: string
+        paths:
+            '/oauth/v2/token':
+                post:
+                    tags:
+                        - Authentication
+                    summary: Get your access token.
+                    description: |
+                        To get your access token, use your username, client public id and secret :
+                        {
+                          "grant_type": "password",
+                          "client_id": "YourClientPublicId",
+                          "client_secret": "YourClientSecret",
+                          "username": "YourUsername",
+                          "password": "YourPassword"
+                        }
+                    responses:
+                        '200':
+                            description: Successful request. Get access token.
+                            schema:
+                                $ref: "#/definitions/AccessToken"
+                        '400':
+                            description: Bad request.
+                consumes:
+                    - application/json
+                parameters:
+                    - in: "body"
+                      name: "body"
+                      description: "Parameters to get your access token."
+                      required: true
+                      schema:
+                          $ref: "#/definitions/Authentication"
