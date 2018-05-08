@@ -14,6 +14,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 
 class ImageController extends FOSRestController
@@ -48,6 +50,25 @@ class ImageController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"Default","list_images"}
      * )
+     * @SWG\Get(
+     *   path="/api/images",
+     *   tags={"Images"},
+     *   summary="Get the list of all the images of mobilephones",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="getImages",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=Image::class, groups={"list_images"}))
+     *   )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -74,6 +95,32 @@ class ImageController extends FOSRestController
      * @Rest\View(
      *     statusCode = 200,
      *     serializerGroups = {"detail_image"}
+     * )
+     *
+     * @SWG\Get(
+     *   path="/api/images/{id}",
+     *   tags={"Images"},
+     *   summary="Get the detail of an image of mobilephones by ID",
+     *   description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="getImageById",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=Image::class, groups={"detail_image"})
+     *   ),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
      * )
      */
     public function showAction(Image $image=null)

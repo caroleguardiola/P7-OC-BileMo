@@ -54,7 +54,7 @@ class BrandController extends FOSRestController
      * @SWG\Get(
      *   path="/api/brands",
      *   tags={"Brands"},
-     *   summary="Get the list of all the brands",
+     *   summary="Get the list of all the brands of mobilephones",
      *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
      *   operationId="getBrands",
      *   produces={"application/json"},
@@ -101,7 +101,7 @@ class BrandController extends FOSRestController
      * @SWG\Get(
      *   path="/api/brands/{id}",
      *   tags={"Brands"},
-     *   summary="Get the detail of a brand by ID",
+     *   summary="Get the detail of a brand of mobilephones by ID",
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
