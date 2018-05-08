@@ -135,14 +135,14 @@ nelmio_api_doc:
             description: |
                 API for Bilemo's Mobile Phones and users of BileMo's customers.
 
-                To access to the resources you must be authicanted with an access token.
+                To access to the resources you must be authenticated with an access token.
             version: 1.0.0
         definitions:
             Authentication:
               type: object
               properties:
                 grant_type:
-                  type: "string"
+                  type: string
                 client_id:
                   type: string
                 client_secret:
@@ -155,13 +155,13 @@ nelmio_api_doc:
               type: object
               properties:
                 access_token:
-                  type: "string"
+                  type: string
                 expires_in:
-                  type: "integer"
+                  type: integer
                 token_type:
-                  type: "string"
+                  type: string
                 scope:
-                  type: "string"
+                  type: string
                 refresh_token:
                   type: string
         paths:
