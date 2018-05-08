@@ -16,7 +16,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
 
 
@@ -57,7 +56,7 @@ class AddressController extends FOSRestController
      *   tags={"Addresses"},
      *   summary="Get the list of all addresses of the users",
      *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
-     *   operationId="getAddressById",
+     *   operationId="getAddresses",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -70,13 +69,7 @@ class AddressController extends FOSRestController
      *     response=200,
      *     description="Successful operation",
      *     @Model(type=Address::class, groups={"list_users", "list_addresses"})
-     *   ),
-     *   @SWG\Response(
-     *     response=403,
-     *     description="No permission to access at this resource"),
-     *   @SWG\Response(
-     *     response=404,
-     *     description="Resource not found")
+     *   )
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)

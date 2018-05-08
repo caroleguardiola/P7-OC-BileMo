@@ -41,7 +41,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/config.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-461">
@@ -51,21 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateOAuthClientCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/CreateOAuthClientCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="36" column="96" lean-forward="false" selection-start-line="36" selection-start-column="96" selection-end-line="36" selection-end-column="96" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AddressController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AddressController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="117" column="12" lean-forward="false" selection-start-line="117" selection-start-column="12" selection-end-line="117" selection-end-column="12" />
+            <state relative-caret-position="1833">
+              <caret line="131" column="8" lean-forward="false" selection-start-line="104" selection-start-column="7" selection-end-line="131" selection-end-column="8" />
               <folding>
                 <element signature="e#133#162#0#PHP" expanded="true" />
               </folding>
@@ -73,45 +63,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Advanced.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/zircote/swagger-php/docs/Advanced.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Getting-started.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/zircote/swagger-php/docs/Getting-started.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                <folding>
-                  <marker date="1525609980419" expanded="true" signature="120:216" ph="{&quot;swagger&quot;: &quot;2.0&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="2537:2885" ph="{&quot;swagger&quot;: &quot;2.0&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="2570:2862" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="2589:2858" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="2604:2852" ph="{&quot;summary&quot;: &quot;list products&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="2663:2844" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="2682:2745" ph="{&quot;description&quot;: &quot;A list with products&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="2768:2834" ph="{&quot;description&quot;: &quot;an \&quot;unexpected\&quot; error&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="3197:3396" ph="{&quot;swagger&quot;: &quot;2.0&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="3236:3394" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="3253:3390" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="3275:3384" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="3293:3376" ph="{&quot;type&quot;: &quot;string&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="4046:4290" ph="{&quot;swagger&quot;: &quot;2.0&quot;...}" />
-                  <marker date="1525609980419" expanded="true" signature="4106:4288" ph="{...}" />
-                  <marker date="1525609980419" expanded="true" signature="4130:4282" ph="{&quot;description&quot;: &quot;The unique identifier of a product in our catalog&quot;...}" />
-                </folding>
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="BrandController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="613">
+              <caret line="119" column="58" lean-forward="false" selection-start-line="119" selection-start-column="58" selection-end-line="119" selection-end-column="58" />
+              <folding>
+                <element signature="e#133#160#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,7 +116,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Representation/Addresses.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/AddressRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/BrandRepository.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Representation/Brands.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/MobilePhoneController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Address.php" />
@@ -180,6 +138,7 @@
         <option value="$PROJECT_DIR$/app/config/routing.yml" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/AddressController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php" />
       </list>
     </option>
   </component>
@@ -417,12 +376,12 @@
       <workItem from="1525511281237" duration="12892000" />
       <workItem from="1525597098867" duration="13814000" />
       <workItem from="1525678293813" duration="13231000" />
-      <workItem from="1525760059909" duration="8279000" />
+      <workItem from="1525760059909" duration="10152000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="346424000" />
+    <option name="totallyTimeSpent" value="348297000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -611,6 +570,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="793">
           <caret line="55" column="5" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="55" selection-end-column="5" />
+          <folding>
+            <element signature="e#137#163#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -701,16 +663,6 @@
         <state relative-caret-position="700">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-367">
-          <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
-          <folding>
-            <element signature="e#133#160#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -882,21 +834,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-461">
+          <caret line="137" column="68" lean-forward="false" selection-start-line="137" selection-start-column="68" selection-end-line="137" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AddressController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="117" column="12" lean-forward="false" selection-start-line="117" selection-start-column="12" selection-end-line="117" selection-end-column="12" />
+        <state relative-caret-position="1833">
+          <caret line="131" column="8" lean-forward="false" selection-start-line="104" selection-start-column="7" selection-end-line="131" selection-end-column="8" />
           <folding>
             <element signature="e#133#162#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-461">
-          <caret line="137" column="68" lean-forward="false" selection-start-line="137" selection-start-column="68" selection-end-line="137" selection-end-column="68" />
-          <folding />
+        <state relative-caret-position="613">
+          <caret line="119" column="58" lean-forward="false" selection-start-line="119" selection-start-column="58" selection-end-line="119" selection-end-column="58" />
+          <folding>
+            <element signature="e#133#160#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

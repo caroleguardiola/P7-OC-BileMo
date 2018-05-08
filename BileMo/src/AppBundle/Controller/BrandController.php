@@ -14,6 +14,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
+
 
 
 class BrandController extends FOSRestController
@@ -48,6 +51,25 @@ class BrandController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"Default","list_brands"}
      * )
+     * @SWG\Get(
+     *   path="/api/brands",
+     *   tags={"Brands"},
+     *   summary="Get the list of all the brands",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="getBrands",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=Brand::class, groups={"list_brands"}))
+     *   )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -74,6 +96,32 @@ class BrandController extends FOSRestController
      * @Rest\View(
      *     statusCode = 200,
      *     serializerGroups = {"detail_brand"}
+     * )
+     *
+     * @SWG\Get(
+     *   path="/api/brands/{id}",
+     *   tags={"Brands"},
+     *   summary="Get the detail of a brand by ID",
+     *   description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="getBrandById",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=Brand::class, groups={"detail_brand"})
+     *   ),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
      * )
      */
     public function showAction(Brand $brand=null)
