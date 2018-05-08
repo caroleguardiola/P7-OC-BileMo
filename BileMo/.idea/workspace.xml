@@ -66,8 +66,8 @@
       <file leaf-file-name="BrandController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="593">
-              <caret line="124" column="8" lean-forward="false" selection-start-line="100" selection-start-column="7" selection-end-line="124" selection-end-column="8" />
+            <state relative-caret-position="260">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#133#160#0#PHP" expanded="true" />
               </folding>
@@ -123,7 +123,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Representation/Os.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Representation/OsR.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/OsRepository.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/OsController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Representation/Images.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/ImageRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Image.php" />
@@ -139,6 +138,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/AddressController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ImageController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/OsController.php" />
       </list>
     </option>
   </component>
@@ -376,12 +376,12 @@
       <workItem from="1525511281237" duration="12892000" />
       <workItem from="1525597098867" duration="13814000" />
       <workItem from="1525678293813" duration="13231000" />
-      <workItem from="1525760059909" duration="11162000" />
+      <workItem from="1525760059909" duration="11375000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="349307000" />
+    <option name="totallyTimeSpent" value="349520000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -666,16 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-767">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#133#157#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-127">
@@ -849,15 +839,25 @@
         <state relative-caret-position="1213">
           <caret line="118" column="28" lean-forward="false" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
           <folding>
-            <element signature="e#133#160#0#PHP" expanded="true" />
+            <element signature="e#133#160#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#133#157#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BrandController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="124" column="8" lean-forward="false" selection-start-line="100" selection-start-column="7" selection-end-line="124" selection-end-column="8" />
+        <state relative-caret-position="260">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#133#160#0#PHP" expanded="true" />
           </folding>
