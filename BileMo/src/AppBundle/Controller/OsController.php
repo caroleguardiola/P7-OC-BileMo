@@ -14,6 +14,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Exception\ResourceNotFoundException;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 
 class OsController extends FOSRestController
@@ -48,6 +50,29 @@ class OsController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"Default","list_os"}
      * )
+     *
+     * @SWG\Get(
+     *   path="/api/os",
+     *   tags={"Os"},
+     *   summary="Get the list of all the os of mobilephones",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="getOs",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=Os::class, groups={"list_os"})),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
+     *   )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -75,11 +100,39 @@ class OsController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"detail_os"}
      * )
+     * @SWG\Get(
+     *   path="/api/os/{id}",
+     *   tags={"Os"},
+     *   summary="Get the detail of an os of mobilephones by ID",
+     *   description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="getOsByID",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @SWG\Schema(ref="#/definitions/GetOsByID")
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
+     * )
      */
     public function showAction(Os $os=null)
     {
-        if (empty($os)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($os)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $os;

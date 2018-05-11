@@ -20,6 +20,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Exception\ResourceValidationException;
 use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 
 class UserController extends FOSRestController
@@ -60,6 +62,30 @@ class UserController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"Default", "list_users"}
      * )
+     *
+     * @SWG\Get(
+     *   path="/api/users",
+     *   tags={"Users"},
+     *   summary="Get the list of all the users of a customer",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="getUsersOfCustomer",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=User::class, groups={"list_users"})
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
+     * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -92,17 +118,49 @@ class UserController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"detail_user"}
      * )
+     *
+     * @SWG\Get(
+     *   path="/api/users/{id}",
+     *   tags={"Users"},
+     *   summary="Get the detail of an user of a customer by ID",
+     *   description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="getUserByID",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @SWG\Schema(ref="#/definitions/GetUserByID")
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *   @SWG\Response(
+     *     response=403,
+     *     description="No permission to access at this resource"),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
+     * )
      */
     public function showAction(User $user=null)
     {
-        $customer = $this->getUser();
+        $customer = $this->getUser()->getId();
 
-        if (empty($user)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($user)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if($customer !== $user->getCustomer()){
-            throw new ResourceAccessForbiddenException('You don\'t have the permission to access to this resource.');
+        if($customer !== $user->getCustomer()->getId()){
+            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
         return $user;
@@ -128,6 +186,37 @@ class UserController extends FOSRestController
      *     options={
      *         "validator"={ "groups"="Create_User" }
      *     }
+     * )
+     *
+     * @SWG\Post(
+     *   path="/api/users",
+     *   tags={"Users"},
+     *   summary="Add a new user",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="PostUser",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     in="header",
+     *     name="Authorization",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *     @SWG\Parameter(
+     *     in="body",
+     *     name="body",
+     *     description="Add a new user.",
+     *     required=true,
+     *     @SWG\Schema(ref="#/definitions/PostUser")
+     *   ),
+     *   @SWG\Response(
+     *     response=201,
+     *     description="Resource created",
+     *     @SWG\Schema(ref="#/definitions/GetUserByID")
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      * )
      */
     public function createAction(User $user, ConstraintViolationList $violations)
@@ -175,7 +264,6 @@ class UserController extends FOSRestController
 
     /**
      * @param User $user
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws ResourceNotFoundException
      * @throws ResourceAccessForbiddenException
@@ -185,26 +273,56 @@ class UserController extends FOSRestController
      *     name="app_user_delete",
      *     requirements={ "id"="\d+" }
      * )
-     * @Rest\View(StatusCode=200)
+     * @Rest\View(StatusCode=204)
+     *
+     * @SWG\Delete(
+     *   path="/api/users/{id}",
+     *   tags={"Users"},
+     *   summary="Delete an user",
+     *    description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="DeleteUserByID",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     in="header",
+     *     name="Authorization",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=204,
+     *     description="Resource deleted"
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *   @SWG\Response(
+     *     response=403,
+     *     description="No permission to access at this resource"),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
+     *   )
+     * )
      */
     public function deleteAction(User $user=null)
     {
-        if (empty($user)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($user)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         $em = $this->getDoctrine()->getManager();
         $userdelete = $em->getRepository('AppBundle:User')->find($user);
 
-        $customer = $this->getUser();
+        $customer = $this->getUser()->getId();
 
-        if($customer !== $user->getCustomer()){
-            throw new ResourceAccessForbiddenException('You don\'t have the permission to access to this resource.');
+        if($customer !== $user->getCustomer()->getId()){
+            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
         $em->remove($userdelete);
         $em->flush();
-
-        return $this->redirectToRoute('app_users_list');
     }
 }

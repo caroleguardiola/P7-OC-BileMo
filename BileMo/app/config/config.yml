@@ -124,3 +124,305 @@ fos_oauth_server:
             access_token_lifetime: 3600
             token_type: Bearer
             supported_scopes: customer
+
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+    documentation:
+        info:
+            title: BileMo API Documentation
+            description: |
+                API for Bilemo's Mobile Phones and users of BileMo's customers.
+
+                To access to the resources you must be authenticated with an access token.
+            version: 1.0.0
+        definitions:
+            Authentication:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+            AccessToken:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                expires_in:
+                  type: integer
+                token_type:
+                  type: string
+                scope:
+                  type: string
+                refresh_token:
+                  type: string
+            GetAddressByID:
+              type: object
+              properties:
+                recipient:
+                  type: string
+                street_address:
+                  type: string
+                  format: maxLenght 255
+                zip_code:
+                  type: string
+                  format: maxLenght 5
+                city:
+                  type: string
+                  format: maxLenght 255
+                country:
+                  type: string
+                  format: maxLenght 255
+                is_active:
+                  type: boolean
+                _embedded:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        username:
+                          type: string
+              required:
+                - recipient
+                - city
+                - country
+            GetBrandByID:
+              type: object
+              properties:
+                name:
+                  type: string
+                  format: maxLenght 255
+                _embedded:
+                  type: object
+                  properties:
+                    mobilephones:
+                      type: object
+                      properties:
+                        model:
+                          type: string
+              required:
+                - name
+            GetImageByID:
+              type: object
+              properties:
+                extension:
+                  type: string
+                  format: maxLenght 45
+                alt:
+                  type: string
+                  format: maxLenght 255
+                _embedded:
+                  type: object
+                  properties:
+                    mobilephones:
+                      type: object
+                      properties:
+                        model:
+                          type: string
+              required:
+                - extension
+                - alt
+            GetMobilePhoneByID:
+              type: object
+              properties:
+                model:
+                  type: string
+                  format: maxLenght 255
+                reference:
+                  type: string
+                  format: maxLenght 255
+                capacity_gb:
+                  type: integer
+                display_inch:
+                  type: number
+                  format: float
+                camera_mp:
+                  type: integer
+                color:
+                  type: string
+                  format: maxLenght 255
+                description:
+                  type: string
+                height_mm:
+                  type: number
+                  format: float
+                width_mm:
+                  type: number
+                  format: float
+                depth_mm:
+                  type: number
+                  format: float
+                weight_grams:
+                  type: integer
+                price_euros:
+                  type: integer
+                price_cents:
+                  type: integer
+                _embedded:
+                  type: object
+                  properties:
+                    brands:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                    os:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                    images:
+                      type: object
+                      properties:
+                        extension:
+                          type: string
+                        alt:
+                          type: string
+              required:
+                - model
+                - reference
+                - color
+                - description
+            GetOsByID:
+              type: object
+              properties:
+                name:
+                  type: string
+                  format: maxLenght 255
+                _embedded:
+                  type: object
+                  properties:
+                    mobilephones:
+                      type: object
+                      properties:
+                        model:
+                          type: string
+              required:
+                - name
+            PostAddress:
+              type: object
+              properties:
+                recipient:
+                  type: string
+                street_address:
+                  type: string
+                  format: maxLenght 255
+                zip_code:
+                  type: string
+                  format: maxLenght 5
+                city:
+                  type: string
+                  format: maxLenght 255
+                country:
+                  type: string
+                  format: maxLenght 255
+              required:
+                - recipient
+                - city
+                - country
+            PostUser:
+              type: object
+              properties:
+                username:
+                  type: string
+                  format: maxLenght 255
+                first_name:
+                  type: string
+                  format: maxLenght 255
+                last_name:
+                  type: string
+                  format: maxLenght 255
+                email:
+                  type: string
+                  format: maxLenght 255, email
+                plain_password:
+                  type: string
+                addresses:
+                  type: array
+                  items:
+                    $ref: "#/definitions/PostAddress"
+              required:
+                - username
+                - email
+            GetUserByID:
+              type: object
+              properties:
+                username:
+                  type: string
+                  format: maxLenght 255
+                first_name:
+                  type: string
+                  format: maxLenght 255
+                last_name:
+                  type: string
+                  format: maxLenght 255
+                email:
+                  type: string
+                  format: maxLenght 255, email
+                is_active:
+                  type: boolean
+                _embedded:
+                  type: object
+                  properties:
+                    addresses:
+                      type: object
+                      properties:
+                        recipient:
+                          type: string
+                        street_address:
+                          type: string
+                          format: maxLenght 255
+                        zip_code:
+                          type: string
+                          format: maxLenght 5
+                        city:
+                          type: string
+                          format: maxLenght 255
+                        country:
+                          type: string
+                          format: maxLenght 255
+                        is_active:
+                          type: boolean
+              required:
+                - username
+                - email
+        paths:
+            '/oauth/v2/token':
+                post:
+                    tags:
+                        - Authentication
+                    summary: Get your access token.
+                    description: |
+                        To get your access token, use your username, client public id and secret :
+                        {
+                          "grant_type": "password",
+                          "client_id": "YourClientPublicId",
+                          "client_secret": "YourClientSecret",
+                          "username": "YourUsername",
+                          "password": "YourPassword"
+                        }
+                    responses:
+                        '200':
+                            description: Successful request. Get access token.
+                            schema:
+                                $ref: "#/definitions/AccessToken"
+                        '400':
+                            description: Bad request.
+                consumes:
+                    - application/json
+                parameters:
+                    - in: "body"
+                      name: "body"
+                      description: "Parameters to get your access token."
+                      required: true
+                      schema:
+                          $ref: "#/definitions/Authentication"

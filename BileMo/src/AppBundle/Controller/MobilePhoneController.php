@@ -14,6 +14,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 
 class MobilePhoneController extends FOSRestController
@@ -54,6 +56,30 @@ class MobilePhoneController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"Default","list_mobilephones"}
      * )
+     *
+     * @SWG\Get(
+     *   path="/api/mobilephones",
+     *   tags={"MobilePhones"},
+     *   summary="Get the list of all the mobilephones",
+     *   description="To access to this resource, you need to enter in the authorization: Bearer 'YourAccessToken'",
+     *   operationId="getMobilePhones",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @Model(type=MobilePhone::class, groups={"list_mobilephones"})
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
+     * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -82,11 +108,40 @@ class MobilePhoneController extends FOSRestController
      *     statusCode = 200,
      *     serializerGroups = {"detail_mobilephone"}
      * )
+     *
+     * @SWG\Get(
+     *   path="/api/mobilephones/{id}",
+     *   tags={"MobilePhones"},
+     *   summary="Get the detail of a mobilephone by ID",
+     *   description="To access to this resource, you need to enter :
+            - in the authorization: Bearer 'YourAccessToken'
+            - in the path: a valid ID",
+     *   operationId="getMobilePhoneByID",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     type="string",
+     *     description="Bearer 'YourAccessToken' ",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @SWG\Schema(ref="#/definitions/GetMobilePhoneByID")
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *   @SWG\Response(
+     *     response=404,
+     *     description="Resource not found")
+     * )
      */
     public function showAction(MobilePhone $mobilephone=null)
     {
-        if (empty($mobilephone)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($mobilephone)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $mobilephone;
