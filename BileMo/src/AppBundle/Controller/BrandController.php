@@ -68,8 +68,11 @@ class BrandController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Brand::class, groups={"list_brands"}))
-     *   )
+     *     @Model(type=Brand::class, groups={"list_brands"})),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")     *
+     * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -105,7 +108,7 @@ class BrandController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getBrandById",
+     *   operationId="getBrandByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -117,8 +120,11 @@ class BrandController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Brand::class, groups={"detail_brand"})
+     *     @SWG\Schema(ref="#/definitions/GetBrandByID")
      *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      *   @SWG\Response(
      *     response=404,
      *     description="Resource not found")
@@ -126,8 +132,8 @@ class BrandController extends FOSRestController
      */
     public function showAction(Brand $brand=null)
     {
-        if (empty($brand)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($brand)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $brand;

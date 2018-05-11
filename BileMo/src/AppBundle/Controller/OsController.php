@@ -68,7 +68,10 @@ class OsController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Os::class, groups={"list_os"}))
+     *     @Model(type=Os::class, groups={"list_os"})),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
      *   )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -104,7 +107,7 @@ class OsController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getOsById",
+     *   operationId="getOsByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -116,8 +119,11 @@ class OsController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Os::class, groups={"detail_os"})
+     *     @SWG\Schema(ref="#/definitions/GetOsByID")
      *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      *   @SWG\Response(
      *     response=404,
      *     description="Resource not found")
@@ -125,8 +131,8 @@ class OsController extends FOSRestController
      */
     public function showAction(Os $os=null)
     {
-        if (empty($os)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($os)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $os;

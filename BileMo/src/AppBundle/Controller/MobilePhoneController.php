@@ -75,7 +75,10 @@ class MobilePhoneController extends FOSRestController
      *     response=200,
      *     description="Successful operation",
      *     @Model(type=MobilePhone::class, groups={"list_mobilephones"})
-     *   )
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -113,7 +116,7 @@ class MobilePhoneController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getMobilePhoneById",
+     *   operationId="getMobilePhoneByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -125,8 +128,11 @@ class MobilePhoneController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=MobilePhone::class, groups={"detail_mobilephone"})
+     *     @SWG\Schema(ref="#/definitions/GetMobilePhoneByID")
      *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      *   @SWG\Response(
      *     response=404,
      *     description="Resource not found")
@@ -134,8 +140,8 @@ class MobilePhoneController extends FOSRestController
      */
     public function showAction(MobilePhone $mobilephone=null)
     {
-        if (empty($mobilephone)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($mobilephone)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $mobilephone;

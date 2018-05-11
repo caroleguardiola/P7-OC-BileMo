@@ -67,7 +67,10 @@ class ImageController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Image::class, groups={"list_images"}))
+     *     @Model(type=Image::class, groups={"list_images"})),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
      *   )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -104,7 +107,7 @@ class ImageController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getImageById",
+     *   operationId="getImageByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -116,8 +119,11 @@ class ImageController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Image::class, groups={"detail_image"})
+     *     @SWG\Schema(ref="#/definitions/GetImageByID")
      *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      *   @SWG\Response(
      *     response=404,
      *     description="Resource not found")
@@ -125,8 +131,8 @@ class ImageController extends FOSRestController
      */
     public function showAction(Image $image=null)
     {
-        if (empty($image)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if (is_null($image)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         return $image;

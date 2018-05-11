@@ -68,8 +68,11 @@ class AddressController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Address::class, groups={"list_users", "list_addresses"})
-     *   )
+     *     @Model(type=Address::class, groups={"list_users", "list_addresses"}),
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -109,7 +112,7 @@ class AddressController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getAddressById",
+     *   operationId="getAddressByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -121,26 +124,29 @@ class AddressController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=Address::class, groups={"detail_address"})
+     *     @SWG\Schema(ref="#/definitions/GetAddressByID")
      *   ),
-     *   @SWG\Response(
-     *     response=403,
-     *     description="No permission to access at this resource"),
-     *   @SWG\Response(
+     *  @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *  @SWG\Response(
      *     response=404,
-     *     description="Resource not found")
+     *     description="Resource not found"),
+     *  @SWG\Response(
+     *     response=403,
+     *     description="No permission to access at this resource")
      * )
      */
     public function showAction(Address $address=null)
     {
-        $customer = $this->getUser();
+        $customer = $this->getUser()->getId();
 
-        if($customer !== $address->getUser()->getCustomer()){
-            throw new ResourceAccessForbiddenException('You don\'t have the permission to access to this resource.');
+        if (is_null($address)){
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if (empty($address)){
-            throw new ResourceNotFoundException('This resource doesn\'t exist.');
+        if($customer !== $address->getUser()->getCustomer()->getId()){
+            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
         return $address;

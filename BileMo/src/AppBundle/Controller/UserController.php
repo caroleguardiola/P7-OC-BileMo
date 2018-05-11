@@ -81,7 +81,10 @@ class UserController extends FOSRestController
      *     response=200,
      *     description="Successful operation",
      *     @Model(type=User::class, groups={"list_users"})
-     *   )
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required")
      * )
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
@@ -123,7 +126,7 @@ class UserController extends FOSRestController
      *   description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="getUserById",
+     *   operationId="getUserByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     name="Authorization",
@@ -135,8 +138,11 @@ class UserController extends FOSRestController
      *   @SWG\Response(
      *     response=200,
      *     description="Successful operation",
-     *     @Model(type=User::class, groups={"detail_user"})
+     *     @SWG\Schema(ref="#/definitions/GetUserByID")
      *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      *   @SWG\Response(
      *     response=403,
      *     description="No permission to access at this resource"),
@@ -150,11 +156,11 @@ class UserController extends FOSRestController
         $customer = $this->getUser()->getId();
 
         if (is_null($user)){
-            throw new ResourceNotFoundException("This resource doesn't exist.");
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         if($customer !== $user->getCustomer()->getId()){
-            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource.");
+            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
         return $user;
@@ -199,15 +205,18 @@ class UserController extends FOSRestController
      *     @SWG\Parameter(
      *     in="body",
      *     name="body",
-     *     description="New user",
+     *     description="Add a new user.",
      *     required=true,
-     *     @Model(type=User::class, groups={"create_user"})
+     *     @SWG\Schema(ref="#/definitions/PostUser")
      *   ),
      *   @SWG\Response(
      *     response=201,
      *     description="Resource created",
-     *     @Model(type=User::class, groups={"create_user"})
-     *   )
+     *     @SWG\Schema(ref="#/definitions/GetUserByID")
+     *   ),
+     *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
      * )
      */
     public function createAction(User $user, ConstraintViolationList $violations)
@@ -255,7 +264,6 @@ class UserController extends FOSRestController
 
     /**
      * @param User $user
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws ResourceNotFoundException
      * @throws ResourceAccessForbiddenException
@@ -274,7 +282,7 @@ class UserController extends FOSRestController
      *    description="To access to this resource, you need to enter :
             - in the authorization: Bearer 'YourAccessToken'
             - in the path: a valid ID",
-     *   operationId="DeleteUserById",
+     *   operationId="DeleteUserByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
      *     in="header",
@@ -288,6 +296,9 @@ class UserController extends FOSRestController
      *     description="Resource deleted"
      *   ),
      *   @SWG\Response(
+     *     response=401,
+     *     description="Unauthorized - OAuth2 authentication required"),
+     *   @SWG\Response(
      *     response=403,
      *     description="No permission to access at this resource"),
      *   @SWG\Response(
@@ -299,7 +310,7 @@ class UserController extends FOSRestController
     public function deleteAction(User $user=null)
     {
         if (is_null($user)){
-            throw new ResourceNotFoundException("This resource doesn't exist.");
+            throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -308,12 +319,10 @@ class UserController extends FOSRestController
         $customer = $this->getUser()->getId();
 
         if($customer !== $user->getCustomer()->getId()){
-            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource.");
+            throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
         $em->remove($userdelete);
         $em->flush();
-
-        return $this->redirectToRoute('app_users_list');
     }
 }
