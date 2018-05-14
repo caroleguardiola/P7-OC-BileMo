@@ -212,7 +212,6 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function __construct()
     {
-        parent::__construct();
         $this->dateCreation = new \Datetime();
         $this->addresses = new ArrayCollection();
         $this->isActive = true;

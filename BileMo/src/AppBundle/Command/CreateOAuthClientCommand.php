@@ -19,7 +19,7 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
     {
         $this
             ->setName('bilemo-api:oauth-server:client:create')
-            ->setDescription('Creates a new OAuth client BileMo')
+            ->setDescription('Create a new OAuth client BileMo')
             ->addArgument(
                 'username',
                 InputArgument::REQUIRED,
