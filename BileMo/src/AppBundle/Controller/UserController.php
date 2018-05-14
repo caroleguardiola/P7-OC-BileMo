@@ -244,12 +244,13 @@ class UserController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        foreach($user->getAddresses() as $address) {
-            $address->setUser($user);
-            $address
-                ->setDateCreation(new \DateTime())
-                ->setIsActive(true)
-            ;
+        if (!is_null($user->getAddresses())) {
+            foreach ($user->getAddresses() as $address) {
+                $address->setUser($user);
+                $address
+                    ->setDateCreation(new \DateTime())
+                    ->setIsActive(true);
+            }
         }
 
         $em->persist($user);
