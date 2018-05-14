@@ -65,6 +65,7 @@ class Customer extends BaseUser
         parent::__construct();
         $this->dateCreation = new \Datetime();
         $this->users = new ArrayCollection();
+        $this->enabled = true;
     }
 
     /**
