@@ -10,17 +10,17 @@ namespace AppBundle\Repository;
  */
 class AddressRepository extends AbstractRepository
 {
-    public function search($id, $order = 'asc', $limit = 20, $offset = 0)
+    public function search($customerId, $order = 'asc', $limit = 20, $offset = 0)
     {
-        $qb = $this
+        $query = $this
             ->createQueryBuilder('a')
             ->select('a')
             ->innerJoin('a.user', 'u')
             ->addSelect('u')
-            ->where('u.customer = :id')
-            ->setParameter('id', $id)
+            ->where('u.customer = :customer_id')
+            ->setParameter('customer_id', $customerId)
             ->orderBy('u.username', $order);
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($query, $limit, $offset);
     }
 }

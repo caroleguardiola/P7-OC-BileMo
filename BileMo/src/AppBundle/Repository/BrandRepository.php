@@ -12,12 +12,12 @@ class BrandRepository extends AbstractRepository
 {
     public function search($order = 'asc', $limit = 20, $offset = 0)
     {
-        $qb = $this
+        $query = $this
             ->createQueryBuilder('b')
             ->select('b')
             ->orderBy('b.name', $order);
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($query, $limit, $offset);
     }
 }
 

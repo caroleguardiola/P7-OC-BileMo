@@ -12,11 +12,11 @@ class ImageRepository extends AbstractRepository
 {
     public function search($order = 'asc', $limit = 20, $offset = 0)
     {
-        $qb = $this
+        $query = $this
             ->createQueryBuilder('i')
             ->select('i')
             ->orderBy('i.alt', $order);
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($query, $limit, $offset);
     }
 }

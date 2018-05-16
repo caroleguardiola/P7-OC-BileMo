@@ -12,12 +12,12 @@ class OsRepository extends AbstractRepository
 {
     public function search($order = 'asc', $limit = 20, $offset = 0)
     {
-        $qb = $this
+        $query = $this
             ->createQueryBuilder('o')
             ->select('o')
             ->orderBy('o.name', $order);
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($query, $limit, $offset);
     }
 }
 
