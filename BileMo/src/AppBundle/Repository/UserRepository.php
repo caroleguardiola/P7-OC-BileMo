@@ -10,6 +10,14 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends AbstractRepository
 {
+    /**
+     * @param $customerId
+     * @param $term
+     * @param string $order
+     * @param int $limit
+     * @param int $offset
+     * @return \Pagerfanta\Pagerfanta
+     */
     public function search($customerId, $term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $query = $this

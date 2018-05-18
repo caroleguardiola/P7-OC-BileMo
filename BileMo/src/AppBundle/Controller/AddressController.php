@@ -6,6 +6,15 @@
  * Time: 18:21
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Address;
@@ -17,7 +26,6 @@ use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
-
 
 class AddressController extends FOSRestController
 {
@@ -141,11 +149,11 @@ class AddressController extends FOSRestController
     {
         $customer = $this->getUser()->getId();
 
-        if (is_null($address)){
+        if (is_null($address)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if($customer !== $address->getUser()->getCustomer()->getId()){
+        if ($customer !== $address->getUser()->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 

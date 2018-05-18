@@ -1,4 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Carole Guardiola
+ * Date: 26/04/2018
+ * Time: 18:03
+ */
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace AppBundle\Entity;
 
@@ -6,7 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-
 
 /**
  * Address
@@ -135,27 +149,27 @@ class Address
     private $isActive;
 
     /**
-     * @var \DateTime
+     * @var datetime_immutable
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="date_creation", type="datetime_immutable")
      *
      * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      *

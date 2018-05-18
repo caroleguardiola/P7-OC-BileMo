@@ -1,4 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Carole Guardiola
+ * Date: 26/04/2018
+ * Time: 18:14
+ */
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace AppBundle\Entity;
 
@@ -7,7 +22,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-
 
 /**
  * Os
@@ -66,27 +80,27 @@ class Os
     private $mobilePhones;
 
     /**
-     * @var \DateTime
+     * @var datetime_immutable
      *
-     * @ORM\Column(name="dateCreation", type="datetime")
+     * @ORM\Column(name="dateCreation", type="datetime_immutable")
      *
      * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     * @ORM\Column(name="updatedAt", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="dateDeactivation", type="datetime", nullable=true)
+     * @ORM\Column(name="dateDeactivation", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      *
@@ -102,7 +116,6 @@ class Os
     {
         $this->dateCreation = new \Datetime();
         $this->mobilePhones = new ArrayCollection();
-
     }
 
     /**
