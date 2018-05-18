@@ -81,27 +81,27 @@ class Os
     private $mobilePhones;
 
     /**
-     * @var \DateTime
+     * @var datetime_immutable
      *
-     * @ORM\Column(name="dateCreation", type="datetime")
+     * @ORM\Column(name="dateCreation", type="datetime_immutable")
      *
      * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     * @ORM\Column(name="updatedAt", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="dateDeactivation", type="datetime", nullable=true)
+     * @ORM\Column(name="dateDeactivation", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      *

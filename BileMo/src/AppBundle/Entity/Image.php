@@ -115,27 +115,27 @@ class Image
     private $mobilePhone;
     
     /**
-     * @var \DateTime
+     * @var datetime_immutable
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="date_creation", type="datetime_immutable")
      *
      * @Serializer\Groups({"none"})
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
      * @Serializer\Groups({"none"})
      *

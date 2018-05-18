@@ -49,23 +49,23 @@ class Customer extends BaseUser
     private $users;
 
     /**
-     * @var \DateTime
+     * @var datetime_immutable
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="date_creation", type="datetime_immutable")
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var datetime_immutable|null
      *
-     * @ORM\Column(name="date_deactivation", type="datetime", nullable=true)
+     * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
      * @Assert\DateTime()
      */
