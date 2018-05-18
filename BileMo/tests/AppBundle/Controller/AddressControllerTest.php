@@ -1,4 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Carole Guardiola
+ * Date: 14/05/2018
+ * Time: 11:00
+ */
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Tests\AppBundle\Controller;
 
@@ -20,6 +35,9 @@ class AddressControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuth()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -42,6 +60,9 @@ class AddressControllerTest extends WebTestCase
         return $this->client;
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuthWithoutPermission()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -74,6 +95,9 @@ class AddressControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     *
+     */
     public function testGetAddressesWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -88,6 +112,9 @@ class AddressControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetAddressByIDWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -103,6 +130,9 @@ class AddressControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetAddressByIDNoPermissionWithAuthorization()
     {
         $this->createAuthorizedClientOAuthWithoutPermission();
@@ -118,6 +148,9 @@ class AddressControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetAddressByIDNotFoundWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -131,5 +164,13 @@ class AddressControllerTest extends WebTestCase
                 'application/json'
             )
         );
+    }
+
+    /**
+     *
+     */
+    public function tearDown()
+    {
+        $this->client = null;
     }
 }

@@ -10,6 +10,13 @@ namespace AppBundle\Repository;
  */
 class MobilePhoneRepository extends AbstractRepository
 {
+    /**
+     * @param $term
+     * @param string $order
+     * @param int $limit
+     * @param int $offset
+     * @return \Pagerfanta\Pagerfanta
+     */
     public function search($term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $query = $this

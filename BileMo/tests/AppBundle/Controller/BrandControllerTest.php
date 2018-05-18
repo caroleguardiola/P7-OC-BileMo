@@ -6,6 +6,15 @@
  * Time: 11:04
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -16,11 +25,17 @@ class BrandControllerTest extends WebTestCase
 {
     private $client = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->client = static::createClient();
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuth()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -39,6 +54,9 @@ class BrandControllerTest extends WebTestCase
         return $this->client;
     }
 
+    /**
+     *
+     */
     public function testGetBrandsWithoutOAuth()
     {
         $this->client->request('GET', '/api/brands');
@@ -46,6 +64,9 @@ class BrandControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     *
+     */
     public function testGetBrandsWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -60,6 +81,9 @@ class BrandControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetBrandByIDWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -76,6 +100,9 @@ class BrandControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetBrandByIDNotFoundWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -89,5 +116,13 @@ class BrandControllerTest extends WebTestCase
                 'application/json'
             )
         );
+    }
+
+    /**
+     *
+     */
+    public function tearDown()
+    {
+        $this->client = null;
     }
 }

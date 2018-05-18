@@ -6,6 +6,15 @@
  * Time: 11:16
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tests\AppBundle\Controller;
 
 use AppBundle\Entity\Customer;
@@ -18,11 +27,17 @@ class UserControllerTest extends WebTestCase
 {
     private $client = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->client = static::createClient();
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuth()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -45,6 +60,9 @@ class UserControllerTest extends WebTestCase
         return $this->client;
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuthWithoutPermission()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -67,6 +85,9 @@ class UserControllerTest extends WebTestCase
         return $this->client;
     }
 
+    /**
+     *
+     */
     public function testGetUsersWithoutOAuth()
     {
         $this->client->request('GET', '/api/users');
@@ -74,6 +95,9 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     *
+     */
     public function testGetUsersWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -88,6 +112,9 @@ class UserControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetUserByIDWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -103,6 +130,9 @@ class UserControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetUserByIDNoPermissionWithAuthorization()
     {
         $this->createAuthorizedClientOAuthWithoutPermission();
@@ -118,6 +148,9 @@ class UserControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetUserByIDNotFoundWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -133,6 +166,9 @@ class UserControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testCreateUserWithAuthorization()
     {
         $oauthHeaders = [
@@ -181,12 +217,23 @@ class UserControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testDeleteUserWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
 
         //test with an existing user in DB
-        $this->client->request('DELETE', '/api/users/72');
+        $this->client->request('DELETE', '/api/users/74');
         $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     *
+     */
+    public function tearDown()
+    {
+        $this->client = null;
     }
 }

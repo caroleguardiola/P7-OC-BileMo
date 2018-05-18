@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Created by PhpStorm.
+ * User: Carole Guardiola
+ * Date: 26/04/2018
+ * Time: 18:10
+ */
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

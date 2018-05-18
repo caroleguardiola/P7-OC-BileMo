@@ -6,6 +6,15 @@
  * Time: 10:29
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -15,6 +24,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateOAuthClientCommand extends ContainerAwareCommand
 {
+    /**
+     *
+     */
     protected function configure()
     {
         $this
@@ -28,6 +40,11 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
             ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');

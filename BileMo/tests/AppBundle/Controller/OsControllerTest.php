@@ -6,6 +6,15 @@
  * Time: 11:14
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -17,11 +26,17 @@ class OsControllerTest extends WebTestCase
 {
     private $client = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->client = static::createClient();
     }
 
+    /**
+     * @return null
+     */
     private function createAuthorizedClientOAuth()
     {
         $this->client->getCookieJar()->set(new Cookie(session_name(), true));
@@ -40,6 +55,9 @@ class OsControllerTest extends WebTestCase
         return $this->client;
     }
 
+    /**
+     *
+     */
     public function testGetOsWithoutOAuth()
     {
         $this->client->request('GET', '/api/os');
@@ -47,6 +65,9 @@ class OsControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     *
+     */
     public function testGetOsWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -61,6 +82,9 @@ class OsControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetOsByIDWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -76,6 +100,9 @@ class OsControllerTest extends WebTestCase
         );
     }
 
+    /**
+     *
+     */
     public function testGetOsByIDNotFoundWithAuthorization()
     {
         $this->createAuthorizedClientOAuth();
@@ -89,5 +116,13 @@ class OsControllerTest extends WebTestCase
                 'application/json'
             )
         );
+    }
+
+    /**
+     *
+     */
+    public function tearDown()
+    {
+        $this->client = null;
     }
 }
