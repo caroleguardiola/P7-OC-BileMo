@@ -22,7 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\BrowserKit\Cookie;
 
-
 class AddressControllerTest extends WebTestCase
 {
     private $client = null;

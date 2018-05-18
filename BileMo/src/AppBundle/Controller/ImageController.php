@@ -26,7 +26,6 @@ use AppBundle\Exception\ResourceNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
 class ImageController extends FOSRestController
 {
     /**
@@ -140,7 +139,7 @@ class ImageController extends FOSRestController
      */
     public function showAction(Image $image=null)
     {
-        if (is_null($image)){
+        if (is_null($image)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 

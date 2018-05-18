@@ -33,7 +33,6 @@ use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
 class UserController extends FOSRestController
 {
     /**
@@ -165,11 +164,11 @@ class UserController extends FOSRestController
     {
         $customer = $this->getUser()->getId();
 
-        if (is_null($user)){
+        if (is_null($user)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if($customer !== $user->getCustomer()->getId()){
+        if ($customer !== $user->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
@@ -320,7 +319,7 @@ class UserController extends FOSRestController
      */
     public function deleteAction(User $user=null)
     {
-        if (is_null($user)){
+        if (is_null($user)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
@@ -329,7 +328,7 @@ class UserController extends FOSRestController
 
         $customer = $this->getUser()->getId();
 
-        if($customer !== $user->getCustomer()->getId()){
+        if ($customer !== $user->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 

@@ -23,7 +23,6 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-
 /**
  * Os
  *
@@ -117,7 +116,6 @@ class Os
     {
         $this->dateCreation = new \Datetime();
         $this->mobilePhones = new ArrayCollection();
-
     }
 
     /**

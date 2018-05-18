@@ -46,11 +46,11 @@ class Images
         $this->addMeta('offset_end', $data->getCurrentPageOffsetEnd());
         $this->addMeta('nb_page', $data->getNbPages());
 
-        if($data->hasNextPage()) {
+        if ($data->hasNextPage()) {
             $this->addMeta('next_page', $data->getNextPage());
         }
 
-        if($data->hasPreviousPage()) {
+        if ($data->hasPreviousPage()) {
             $this->addMeta('previous_page', $data->getPreviousPage());
         }
     }

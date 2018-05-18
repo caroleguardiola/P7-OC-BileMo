@@ -26,8 +26,6 @@ use AppBundle\Exception\ResourceNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
-
 class BrandController extends FOSRestController
 {
     /**
@@ -141,7 +139,7 @@ class BrandController extends FOSRestController
      */
     public function showAction(Brand $brand=null)
     {
-        if (is_null($brand)){
+        if (is_null($brand)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 

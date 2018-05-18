@@ -26,7 +26,6 @@ use AppBundle\Exception\ResourceNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
 class MobilePhoneController extends FOSRestController
 {
     /**
@@ -149,7 +148,7 @@ class MobilePhoneController extends FOSRestController
      */
     public function showAction(MobilePhone $mobilephone=null)
     {
-        if (is_null($mobilephone)){
+        if (is_null($mobilephone)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 

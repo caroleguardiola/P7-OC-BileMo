@@ -26,4 +26,3 @@ class BrandRepository extends AbstractRepository
         return $this->paginate($query, $limit, $offset);
     }
 }
-

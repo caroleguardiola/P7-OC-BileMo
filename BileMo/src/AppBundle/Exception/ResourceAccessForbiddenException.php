@@ -17,8 +17,6 @@
 
 namespace AppBundle\Exception;
 
-
 class ResourceAccessForbiddenException extends \Exception
 {
-
 }

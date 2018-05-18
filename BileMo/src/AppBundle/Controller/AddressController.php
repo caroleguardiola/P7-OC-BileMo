@@ -27,7 +27,6 @@ use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
 class AddressController extends FOSRestController
 {
     /**
@@ -150,11 +149,11 @@ class AddressController extends FOSRestController
     {
         $customer = $this->getUser()->getId();
 
-        if (is_null($address)){
+        if (is_null($address)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if($customer !== $address->getUser()->getCustomer()->getId()){
+        if ($customer !== $address->getUser()->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 

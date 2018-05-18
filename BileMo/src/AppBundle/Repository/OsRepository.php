@@ -26,4 +26,3 @@ class OsRepository extends AbstractRepository
         return $this->paginate($query, $limit, $offset);
     }
 }
-

@@ -26,7 +26,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
-
 class OsController extends FOSRestController
 {
     /**
@@ -140,7 +139,7 @@ class OsController extends FOSRestController
      */
     public function showAction(Os $os=null)
     {
-        if (is_null($os)){
+        if (is_null($os)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
