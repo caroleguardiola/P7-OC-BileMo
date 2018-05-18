@@ -9,6 +9,8 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\BrowserKit\Cookie;
 
 
 class MobilePhoneControllerTest extends WebTestCase
@@ -20,20 +22,22 @@ class MobilePhoneControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    protected function getToken()
+    private function createAuthorizedClientOAuth()
     {
-        $oauthHeaders = [
-            "client_id" 	=> "32_3dfwxjxx0kysgssckcso0cscck0wo8ks88sgkg8k4cs88kksc4",
-            "client_secret" => "3mk92fc9oyww4ks0g00gw8scwoogc0ksg4wkk4cog4k44ksk8k",
-            "grant_type" 	=> 'password',
-            "username" 		=> "Anna",
-            "password" 		=> "anna"
-        ];
-        $this->client->request('GET', '/oauth/v2/token', $oauthHeaders);
-        $data = $this->client->getResponse()->getContent();
-        $json = json_decode($data);
-        $accessToken = $json->{'access_token'};
-        return $accessToken;
+        $this->client->getCookieJar()->set(new Cookie(session_name(), true));
+        $session = $this->client->getContainer()->get('session');
+
+        $firewallContext = 'main';
+
+        $token = new UsernamePasswordToken('admin', null, $firewallContext, array('IS_AUTHENTICATED_FULLY'));
+        self::$kernel->getContainer()->get('security.token_storage')->setToken($token);
+
+        $session->set('_security_'. 'api', serialize($token));
+        $session->save();
+
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $this->client->getCookieJar()->set($cookie);
+        return $this->client;
     }
 
     public function testGetMobilePhonesWithoutOAuth()
@@ -43,16 +47,11 @@ class MobilePhoneControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testGetMobilePhonesWithAccessToken()
+    public function testGetMobilePhonesWithAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
-
-        $this->client->request('GET', '/api/mobilephones', array(), array(), $headers);
+        $this->client->request('GET', '/api/mobilephones');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
@@ -62,16 +61,12 @@ class MobilePhoneControllerTest extends WebTestCase
         );
     }
 
-    public function testGetMobilePhoneByIDWithAccessToken()
+    public function testGetMobilePhoneByIDWitAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
-
-        $this->client->request('GET', '/api/mobilephones/1', array(), array(), $headers);
+        //test with an existing brand in DB
+        $this->client->request('GET', '/api/mobilephones/10');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
@@ -81,16 +76,12 @@ class MobilePhoneControllerTest extends WebTestCase
         );
     }
 
-    public function testGetMobilePhoneByIDNotFoundWithAccessToken()
+    public function testGetMobilePhoneByIDNotFoundWithAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
-
-        $this->client->request('GET', '/api/mobilephones/10', array(), array(), $headers);
+        //test with an non existing mobilephone in DB
+        $this->client->request('GET', '/api/mobilephones/100');
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
