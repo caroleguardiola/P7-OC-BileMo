@@ -6,6 +6,15 @@
  * Time: 11:11
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\MobilePhone;
@@ -16,7 +25,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
-
 
 class MobilePhoneController extends FOSRestController
 {
@@ -140,7 +148,7 @@ class MobilePhoneController extends FOSRestController
      */
     public function showAction(MobilePhone $mobilephone=null)
     {
-        if (is_null($mobilephone)){
+        if (is_null($mobilephone)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 

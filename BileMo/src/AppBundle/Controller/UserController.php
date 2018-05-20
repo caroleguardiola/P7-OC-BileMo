@@ -6,10 +6,20 @@
  * Time: 17:41
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Representation\Users;
+use \Datetime;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -22,7 +32,6 @@ use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
-
 
 class UserController extends FOSRestController
 {
@@ -155,11 +164,11 @@ class UserController extends FOSRestController
     {
         $customer = $this->getUser()->getId();
 
-        if (is_null($user)){
+        if (is_null($user)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        if($customer !== $user->getCustomer()->getId()){
+        if ($customer !== $user->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
@@ -233,7 +242,7 @@ class UserController extends FOSRestController
         $customer = $this->getUser();
 
         $user
-            ->setDateCreation(new \DateTime())
+            ->setDateCreation(new DateTime())
             ->setIsActive(true)
             ->setCustomer($customer)
         ;
@@ -242,19 +251,19 @@ class UserController extends FOSRestController
         $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($password);
 
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         if (!is_null($user->getAddresses())) {
             foreach ($user->getAddresses() as $address) {
                 $address->setUser($user);
                 $address
-                    ->setDateCreation(new \DateTime())
+                    ->setDateCreation(new DateTime())
                     ->setIsActive(true);
             }
         }
 
-        $em->persist($user);
-        $em->flush();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return $this->view(
             $user,
@@ -310,20 +319,20 @@ class UserController extends FOSRestController
      */
     public function deleteAction(User $user=null)
     {
-        if (is_null($user)){
+        if (is_null($user)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $userdelete = $em->getRepository('AppBundle:User')->find($user);
+        $entityManager = $this->getDoctrine()->getManager();
+        $userDelete = $entityManager->getRepository('AppBundle:User')->find($user);
 
         $customer = $this->getUser()->getId();
 
-        if($customer !== $user->getCustomer()->getId()){
+        if ($customer !== $user->getCustomer()->getId()) {
             throw new ResourceAccessForbiddenException("You don't have the permission to access to this resource");
         }
 
-        $em->remove($userdelete);
-        $em->flush();
+        $entityManager->remove($userDelete);
+        $entityManager->flush();
     }
 }

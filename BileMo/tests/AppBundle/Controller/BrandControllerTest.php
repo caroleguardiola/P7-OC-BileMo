@@ -6,35 +6,57 @@
  * Time: 11:04
  */
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Carole Guardiola <carole.guardiola@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\BrowserKit\Cookie;
 
 class BrandControllerTest extends WebTestCase
 {
     private $client = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->client = static::createClient();
     }
 
-    protected function getToken()
+    /**
+     * @return null
+     */
+    private function createAuthorizedClientOAuth()
     {
-        $oauthHeaders = [
-            "client_id" 	=> "32_3dfwxjxx0kysgssckcso0cscck0wo8ks88sgkg8k4cs88kksc4",
-            "client_secret" => "3mk92fc9oyww4ks0g00gw8scwoogc0ksg4wkk4cog4k44ksk8k",
-            "grant_type" 	=> 'password',
-            "username" 		=> "Anna",
-            "password" 		=> "anna"
-        ];
-        $this->client->request('GET', '/oauth/v2/token', $oauthHeaders);
-        $data = $this->client->getResponse()->getContent();
-        $json = json_decode($data);
-        $accessToken = $json->{'access_token'};
-        return $accessToken;
+        $this->client->getCookieJar()->set(new Cookie(session_name(), true));
+        $session = $this->client->getContainer()->get('session');
+
+        $firewallContext = 'main';
+
+        $token = new UsernamePasswordToken('admin', null, $firewallContext, array('IS_AUTHENTICATED_FULLY'));
+        self::$kernel->getContainer()->get('security.token_storage')->setToken($token);
+
+        $session->set('_security_'. 'api', serialize($token));
+        $session->save();
+
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $this->client->getCookieJar()->set($cookie);
+        return $this->client;
     }
 
+    /**
+     *
+     */
     public function testGetBrandsWithoutOAuth()
     {
         $this->client->request('GET', '/api/brands');
@@ -42,16 +64,14 @@ class BrandControllerTest extends WebTestCase
         $this->assertEquals(401, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testGetBrandsWithAccessToken()
+    /**
+     *
+     */
+    public function testGetBrandsWithAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
-
-        $this->client->request('GET', '/api/brands', array(), array(), $headers);
+        $this->client->request('GET', '/api/brands');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
@@ -61,17 +81,17 @@ class BrandControllerTest extends WebTestCase
         );
     }
 
-    public function testGetBrandByIDWithAccessToken()
+    /**
+     *
+     */
+    public function testGetBrandByIDWithAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
+        //test with an existing brand in DB
+        $this->client->request('GET', '/api/brands/14');
 
-        $this->client->request('GET', '/api/brands/1', array(), array(), $headers);
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
                 'Content-Type',
@@ -80,16 +100,15 @@ class BrandControllerTest extends WebTestCase
         );
     }
 
-    public function testGetBrandByIDNotFoundWithAccessToken()
+    /**
+     *
+     */
+    public function testGetBrandByIDNotFoundWithAuthorization()
     {
-        $accessToken = $this->getToken();
+        $this->createAuthorizedClientOAuth();
 
-        $headers = array(
-            'HTTP_AUTHORIZATION' => "Bearer ".$accessToken,
-            'CONTENT_TYPE' => 'application/json',
-        );
-
-        $this->client->request('GET', '/api/brands/10', array(), array(), $headers);
+        //test with an non existing brand in DB
+        $this->client->request('GET', '/api/brands/100');
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
@@ -97,5 +116,13 @@ class BrandControllerTest extends WebTestCase
                 'application/json'
             )
         );
+    }
+
+    /**
+     *
+     */
+    public function tearDown()
+    {
+        $this->client = null;
     }
 }
