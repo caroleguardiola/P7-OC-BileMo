@@ -320,7 +320,7 @@ class Address
     /**
      * Set dateCreation.
      *
-     * @param \DateTime $dateCreation
+     * @param datetime_immutable $dateCreation
      *
      * @return Address
      */
@@ -334,7 +334,7 @@ class Address
     /**
      * Get dateCreation.
      *
-     * @return \DateTime
+     * @return datetime_immutable
      */
     public function getDateCreation()
     {
@@ -352,7 +352,7 @@ class Address
     /**
      * Set updatedAt.
      *
-     * @param \DateTime|null $updatedAt
+     * @param datetime_immutable|null $updatedAt
      *
      * @return Address
      */
@@ -366,7 +366,7 @@ class Address
     /**
      * Get updatedAt.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getUpdatedAt()
     {
@@ -376,7 +376,7 @@ class Address
     /**
      * Set dateDeactivation.
      *
-     * @param \DateTime|null $dateDeactivation
+     * @param datetime_immutable|null $dateDeactivation
      *
      * @return Address
      */
@@ -390,7 +390,7 @@ class Address
     /**
      * Get dateDeactivation.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getDateDeactivation()
     {

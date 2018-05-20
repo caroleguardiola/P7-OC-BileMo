@@ -156,7 +156,7 @@ class Brand
     /**
      * Set dateCreation.
      *
-     * @param \DateTime $dateCreation
+     * @param datetime_immutable $dateCreation
      *
      * @return Brand
      */
@@ -170,7 +170,7 @@ class Brand
     /**
      * Get dateCreation.
      *
-     * @return \DateTime
+     * @return datetime_immutable
      */
     public function getDateCreation()
     {
@@ -188,7 +188,7 @@ class Brand
     /**
      * Set updatedAt.
      *
-     * @param \DateTime|null $updatedAt
+     * @param datetime_immutable|null $updatedAt
      *
      * @return Brand
      */
@@ -202,7 +202,7 @@ class Brand
     /**
      * Get updatedAt.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getUpdatedAt()
     {
@@ -212,7 +212,7 @@ class Brand
     /**
      * Set dateDeactivation.
      *
-     * @param \DateTime|null $dateDeactivation
+     * @param datetime_immutable|null $dateDeactivation
      *
      * @return Brand
      */
@@ -226,7 +226,7 @@ class Brand
     /**
      * Get dateDeactivation.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getDateDeactivation()
     {

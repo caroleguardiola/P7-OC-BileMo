@@ -95,7 +95,7 @@ class Customer extends BaseUser
     /**
      * Set dateCreation.
      *
-     * @param \DateTime $dateCreation
+     * @param datetime_immutable $dateCreation
      *
      * @return Customer
      */
@@ -109,7 +109,7 @@ class Customer extends BaseUser
     /**
      * Get dateCreation.
      *
-     * @return \DateTime
+     * @return datetime_immutable
      */
     public function getDateCreation()
     {
@@ -127,7 +127,7 @@ class Customer extends BaseUser
     /**
      * Set updatedAt.
      *
-     * @param \DateTime|null $updatedAt
+     * @param datetime_immutable|null $updatedAt
      *
      * @return Customer
      */
@@ -141,7 +141,7 @@ class Customer extends BaseUser
     /**
      * Get updatedAt.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getUpdatedAt()
     {
@@ -151,7 +151,7 @@ class Customer extends BaseUser
     /**
      * Set dateDeactivation.
      *
-     * @param \DateTime|null $dateDeactivation
+     * @param datetime_immutable|null $dateDeactivation
      *
      * @return Customer
      */
@@ -165,7 +165,7 @@ class Customer extends BaseUser
     /**
      * Get dateDeactivation.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getDateDeactivation()
     {

@@ -212,7 +212,7 @@ class Image
     /**
      * Set dateCreation.
      *
-     * @param \DateTime $dateCreation
+     * @param datetime_immutable $dateCreation
      *
      * @return Image
      */
@@ -226,7 +226,7 @@ class Image
     /**
      * Get dateCreation.
      *
-     * @return \DateTime
+     * @return datetime_immutable
      */
     public function getDateCreation()
     {
@@ -244,7 +244,7 @@ class Image
     /**
      * Set updatedAt.
      *
-     * @param \DateTime|null $updatedAt
+     * @param datetime_immutable|null $updatedAt
      *
      * @return Image
      */
@@ -258,7 +258,7 @@ class Image
     /**
      * Get updatedAt.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getUpdatedAt()
     {
@@ -268,7 +268,7 @@ class Image
     /**
      * Set dateDeactivation.
      *
-     * @param \DateTime|null $dateDeactivation
+     * @param datetime_immutable|null $dateDeactivation
      *
      * @return Image
      */
@@ -282,7 +282,7 @@ class Image
     /**
      * Get dateDeactivation.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getDateDeactivation()
     {

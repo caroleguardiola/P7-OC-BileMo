@@ -366,7 +366,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set dateCreation.
      *
-     * @param \DateTime $dateCreation
+     * @param datetime_immutable $dateCreation
      *
      * @return User
      */
@@ -380,7 +380,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get dateCreation.
      *
-     * @return \DateTime
+     * @return datetime_immutable
      */
     public function getDateCreation()
     {
@@ -398,7 +398,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set updatedAt.
      *
-     * @param \DateTime|null $updatedAt
+     * @param datetime_immutable|null $updatedAt
      *
      * @return User
      */
@@ -412,7 +412,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get updatedAt.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getUpdatedAt()
     {
@@ -422,7 +422,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set dateDeactivation.
      *
-     * @param \DateTime|null $dateDeactivation
+     * @param datetime_immutable|null $dateDeactivation
      *
      * @return User
      */
@@ -436,7 +436,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get dateDeactivation.
      *
-     * @return \DateTime|null
+     * @return datetime_immutable|null
      */
     public function getDateDeactivation()
     {
