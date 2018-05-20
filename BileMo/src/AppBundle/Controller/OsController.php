@@ -113,8 +113,8 @@ class OsController extends FOSRestController
      *   tags={"Os"},
      *   summary="Get the detail of an os of mobilephones by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getOsByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(

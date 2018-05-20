@@ -113,8 +113,8 @@ class BrandController extends FOSRestController
      *   tags={"Brands"},
      *   summary="Get the detail of a brand of mobilephones by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getBrandByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(

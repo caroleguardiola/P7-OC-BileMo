@@ -133,8 +133,8 @@ class UserController extends FOSRestController
      *   tags={"Users"},
      *   summary="Get the detail of an user of a customer by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getUserByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
@@ -290,8 +290,8 @@ class UserController extends FOSRestController
      *   tags={"Users"},
      *   summary="Delete an user",
      *    description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="DeleteUserByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(

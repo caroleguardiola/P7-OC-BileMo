@@ -113,8 +113,8 @@ class ImageController extends FOSRestController
      *   tags={"Images"},
      *   summary="Get the detail of an image of mobilephones by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getImageByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(

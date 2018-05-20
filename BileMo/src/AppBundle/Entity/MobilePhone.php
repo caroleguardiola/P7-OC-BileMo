@@ -121,7 +121,7 @@ class MobilePhone
     private $capacityGb;
 
     /**
-     * @var int
+     * @var float
      *
      * @ORM\Column(name="display_inch", type="float", options={"unsigned":true})
      *
@@ -174,7 +174,7 @@ class MobilePhone
     private $description;
 
     /**
-     * @var int
+     * @var float
      *
      * @ORM\Column(name="height_mm", type="float", options={"unsigned":true})
      *
@@ -187,7 +187,7 @@ class MobilePhone
     private $heightMm;
 
     /**
-     * @var int
+     * @var float
      *
      * @ORM\Column(name="width_mm", type="float", options={"unsigned":true})
      *
@@ -200,7 +200,7 @@ class MobilePhone
     private $widthMm;
 
     /**
-     * @var int
+     * @var float
      *
      * @ORM\Column(name="depth_mm", type="float", options={"unsigned":true})
      *
@@ -226,7 +226,7 @@ class MobilePhone
     private $weightGrams;
 
     /**
-     * @var int
+     * @var float
      *
      * @ORM\Column(name="price_euros", type="float", options={"unsigned":true})
      *
@@ -404,7 +404,7 @@ class MobilePhone
     /**
      * Set displayInch.
      *
-     * @param int $displayInch
+     * @param float $displayInch
      *
      * @return MobilePhone
      */
@@ -418,7 +418,7 @@ class MobilePhone
     /**
      * Get displayInch.
      *
-     * @return int
+     * @return float
      */
     public function getDisplayInch()
     {
@@ -500,7 +500,7 @@ class MobilePhone
     /**
      * Set heightMm.
      *
-     * @param int $heightMm
+     * @param float $heightMm
      *
      * @return MobilePhone
      */
@@ -514,7 +514,7 @@ class MobilePhone
     /**
      * Get heightMm.
      *
-     * @return int
+     * @return float
      */
     public function getHeightMm()
     {
@@ -524,7 +524,7 @@ class MobilePhone
     /**
      * Set widthMm.
      *
-     * @param int $widthMm
+     * @param float $widthMm
      *
      * @return MobilePhone
      */
@@ -538,7 +538,7 @@ class MobilePhone
     /**
      * Get widthMm.
      *
-     * @return int
+     * @return float
      */
     public function getWidthMm()
     {
@@ -548,7 +548,7 @@ class MobilePhone
     /**
      * Set depthMm.
      *
-     * @param int $depthMm
+     * @param float $depthMm
      *
      * @return MobilePhone
      */
@@ -562,7 +562,7 @@ class MobilePhone
     /**
      * Get depthMm.
      *
-     * @return int
+     * @return float
      */
     public function getDepthMm()
     {
@@ -596,7 +596,7 @@ class MobilePhone
     /**
      * Set priceEuros.
      *
-     * @param int $priceEuros
+     * @param float $priceEuros
      *
      * @return MobilePhone
      */
@@ -610,7 +610,7 @@ class MobilePhone
     /**
      * Get priceEuros.
      *
-     * @return int
+     * @return float
      */
     public function getPriceEuros()
     {

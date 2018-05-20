@@ -122,8 +122,8 @@ class MobilePhoneController extends FOSRestController
      *   tags={"MobilePhones"},
      *   summary="Get the detail of a mobilephone by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getMobilePhoneByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(

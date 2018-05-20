@@ -118,8 +118,8 @@ class AddressController extends FOSRestController
      *   tags={"Addresses"},
      *   summary="Get the detail of an user's address by ID",
      *   description="To access to this resource, you need to enter :
-            - in the authorization: Bearer 'YourAccessToken'
-            - in the path: a valid ID",
+     *      - in the authorization: Bearer 'YourAccessToken'
+     *      - in the path: a valid ID",
      *   operationId="getAddressByID",
      *   produces={"application/json"},
      *   @SWG\Parameter(
