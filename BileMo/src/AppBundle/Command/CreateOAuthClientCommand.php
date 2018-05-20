@@ -10,6 +10,7 @@ namespace AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -25,6 +26,13 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
                 InputArgument::REQUIRED,
                 'OAuth Client Username?'
             )
+            ->addOption(
+                'redirect-uri',
+                null,
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'Sets redirect uri for client. Use this option multiple times to set multiple redirect URIs.',
+                null
+            )
             ;
     }
 
@@ -33,8 +41,8 @@ class CreateOAuthClientCommand extends ContainerAwareCommand
         $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');
         $client = $clientManager->createClient();
         $client->setUsername($input->getArgument('username'));
-        $client->setRedirectUris(array('http://localhost/P7/P7_OC_BileMo/BileMo/web/app_dev.php/'));
-        $client->setAllowedGrantTypes(array('password', 'refresh_token', 'authorization_code'));
+        $client->setRedirectUris($input->getOption('redirect-uri'));
+        $client->setAllowedGrantTypes(array('password', 'refresh_token'));
         $clientManager->updateClient($client);
 
         $output->writeln(
