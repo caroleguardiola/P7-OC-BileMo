@@ -18,6 +18,7 @@
 
 namespace AppBundle\Entity;
 
+use \DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation as Serializer;
@@ -114,7 +115,7 @@ class Image
     private $mobilePhone;
     
     /**
-     * @var datetime_immutable
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
      *
@@ -123,7 +124,7 @@ class Image
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      *
@@ -132,7 +133,7 @@ class Image
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
@@ -148,7 +149,7 @@ class Image
      */
     public function __construct()
     {
-        $this->dateCreation = new \Datetime();
+        $this->dateCreation = new DateTimeImmutable();
     }
 
     /**
@@ -212,7 +213,7 @@ class Image
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTimeImmutable $dateCreation
      *
      * @return Image
      */
@@ -226,7 +227,7 @@ class Image
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTimeImmutable
      */
     public function getDateCreation()
     {
@@ -238,13 +239,13 @@ class Image
      */
     public function updateDate()
     {
-        $this->setUpdatedAt(new \Datetime());
+        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTimeImmutable|null $updatedAt
      *
      * @return Image
      */
@@ -258,7 +259,7 @@ class Image
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getUpdatedAt()
     {
@@ -268,7 +269,7 @@ class Image
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTimeImmutable|null $dateDeactivation
      *
      * @return Image
      */
@@ -282,7 +283,7 @@ class Image
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getDateDeactivation()
     {

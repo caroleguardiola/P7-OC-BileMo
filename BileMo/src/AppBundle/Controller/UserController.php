@@ -19,7 +19,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Representation\Users;
-use \Datetime;
+use \DateTimeImmutable;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -242,7 +242,7 @@ class UserController extends FOSRestController
         $customer = $this->getUser();
 
         $user
-            ->setDateCreation(new DateTime())
+            ->setDateCreation(new DateTimeImmutable())
             ->setIsActive(true)
             ->setCustomer($customer)
         ;
@@ -257,7 +257,7 @@ class UserController extends FOSRestController
             foreach ($user->getAddresses() as $address) {
                 $address->setUser($user);
                 $address
-                    ->setDateCreation(new DateTime())
+                    ->setDateCreation(new DateTimeImmutable())
                     ->setIsActive(true);
             }
         }
@@ -319,12 +319,12 @@ class UserController extends FOSRestController
      */
     public function deleteAction(User $user=null)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $userDelete = $entityManager->getRepository('AppBundle:User')->find($user);
+
         if (is_null($user)) {
             throw new ResourceNotFoundException("This resource doesn't exist");
         }
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $userDelete = $entityManager->getRepository('AppBundle:User')->find($user);
 
         $customer = $this->getUser()->getId();
 

@@ -17,6 +17,7 @@
 
 namespace AppBundle\Entity;
 
+use \DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -192,7 +193,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $addresses;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
      *
@@ -201,7 +202,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="updatedat", type="datetime_immutable", nullable=true)
      *
@@ -210,7 +211,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
@@ -226,7 +227,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->dateCreation = new \Datetime();
+        $this->dateCreation = new DateTimeImmutable();
         $this->addresses = new ArrayCollection();
         $this->isActive = true;
     }
@@ -366,7 +367,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTimeImmutable $dateCreation
      *
      * @return User
      */
@@ -380,7 +381,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTimeImmutable
      */
     public function getDateCreation()
     {
@@ -392,13 +393,13 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function updateDate()
     {
-        $this->setUpdatedAt(new \Datetime());
+        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTimeImmutable|null $updatedAt
      *
      * @return User
      */
@@ -412,7 +413,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getUpdatedAt()
     {
@@ -422,7 +423,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTimeImmutable|null $dateDeactivation
      *
      * @return User
      */
@@ -436,7 +437,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getDateDeactivation()
     {

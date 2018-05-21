@@ -17,6 +17,7 @@
 
 namespace AppBundle\Entity;
 
+use \DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -149,7 +150,7 @@ class Address
     private $isActive;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
      *
@@ -158,7 +159,7 @@ class Address
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      *
@@ -167,7 +168,7 @@ class Address
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
@@ -183,7 +184,7 @@ class Address
      */
     public function __construct()
     {
-        $this->dateCreation = new \Datetime();
+        $this->dateCreation = new DateTimeImmutable();
         $this->isActive = true;
     }
 
@@ -320,7 +321,7 @@ class Address
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTimeImmutable $dateCreation
      *
      * @return Address
      */
@@ -334,7 +335,7 @@ class Address
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTimeImmutable
      */
     public function getDateCreation()
     {
@@ -346,13 +347,13 @@ class Address
      */
     public function updateDate()
     {
-        $this->setUpdatedAt(new \Datetime());
+        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTimeImmutable|null $updatedAt
      *
      * @return Address
      */
@@ -366,7 +367,7 @@ class Address
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getUpdatedAt()
     {
@@ -376,7 +377,7 @@ class Address
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTimeImmutable|null $dateDeactivation
      *
      * @return Address
      */
@@ -390,7 +391,7 @@ class Address
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getDateDeactivation()
     {

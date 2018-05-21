@@ -18,6 +18,7 @@
 
 namespace AppBundle\Entity;
 
+use \DateTimeImmutable;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,21 +49,21 @@ class Customer extends BaseUser
     private $users;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="date_creation", type="datetime_immutable")
      */
     private $dateCreation;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var datetime_immutable|null
+     * @var \DateTimeImmutable|null
      *
      * @ORM\Column(name="date_deactivation", type="datetime_immutable", nullable=true)
      *
@@ -77,7 +78,7 @@ class Customer extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->dateCreation = new \Datetime();
+        $this->dateCreation = new DateTimeImmutable();
         $this->users = new ArrayCollection();
         $this->enabled = true;
     }
@@ -95,7 +96,7 @@ class Customer extends BaseUser
     /**
      * Set dateCreation.
      *
-     * @param datetime_immutable $dateCreation
+     * @param \DateTimeImmutable $dateCreation
      *
      * @return Customer
      */
@@ -109,7 +110,7 @@ class Customer extends BaseUser
     /**
      * Get dateCreation.
      *
-     * @return datetime_immutable
+     * @return \DateTimeImmutable
      */
     public function getDateCreation()
     {
@@ -121,13 +122,13 @@ class Customer extends BaseUser
      */
     public function updateDate()
     {
-        $this->setUpdatedAt(new \Datetime());
+        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     /**
      * Set updatedAt.
      *
-     * @param datetime_immutable|null $updatedAt
+     * @param \DateTimeImmutable|null $updatedAt
      *
      * @return Customer
      */
@@ -141,7 +142,7 @@ class Customer extends BaseUser
     /**
      * Get updatedAt.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getUpdatedAt()
     {
@@ -151,7 +152,7 @@ class Customer extends BaseUser
     /**
      * Set dateDeactivation.
      *
-     * @param datetime_immutable|null $dateDeactivation
+     * @param \DateTimeImmutable|null $dateDeactivation
      *
      * @return Customer
      */
@@ -165,7 +166,7 @@ class Customer extends BaseUser
     /**
      * Get dateDeactivation.
      *
-     * @return datetime_immutable|null
+     * @return \DateTimeImmutable|null
      */
     public function getDateDeactivation()
     {
