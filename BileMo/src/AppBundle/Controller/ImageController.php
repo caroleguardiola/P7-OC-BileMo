@@ -25,6 +25,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use AppBundle\Exception\ResourceNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 class ImageController extends FOSRestController
 {
@@ -80,6 +81,7 @@ class ImageController extends FOSRestController
      *     response=401,
      *     description="Unauthorized - OAuth2 authentication required")
      *   )
+     * @Cache(smaxage="3600", public=true)
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -136,6 +138,7 @@ class ImageController extends FOSRestController
      *     response=404,
      *     description="Resource not found")
      * )
+     * @Cache(smaxage="3600", public=true)
      */
     public function showAction(Image $image=null)
     {
