@@ -26,6 +26,7 @@ use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 class AddressController extends FOSRestController
 {
@@ -82,6 +83,7 @@ class AddressController extends FOSRestController
      *     response=401,
      *     description="Unauthorized - OAuth2 authentication required"),
      * )
+     * @Cache(smaxage="3600", public=true)
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -144,6 +146,7 @@ class AddressController extends FOSRestController
      *     response=403,
      *     description="No permission to access at this resource")
      * )
+     * @Cache(smaxage="3600", public=true)
      */
     public function showAction(Address $address=null)
     {

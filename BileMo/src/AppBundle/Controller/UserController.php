@@ -32,6 +32,7 @@ use AppBundle\Exception\ResourceNotFoundException;
 use AppBundle\Exception\ResourceAccessForbiddenException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 class UserController extends FOSRestController
 {
@@ -95,6 +96,7 @@ class UserController extends FOSRestController
      *     response=401,
      *     description="Unauthorized - OAuth2 authentication required")
      * )
+     * @Cache(smaxage="3600", public=true)
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
@@ -159,6 +161,7 @@ class UserController extends FOSRestController
      *     response=404,
      *     description="Resource not found")
      * )
+     * @Cache(smaxage="3600", public=true)
      */
     public function showAction(User $user=null)
     {
