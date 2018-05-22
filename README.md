@@ -14,7 +14,7 @@ The goal is to provide access to the catalog of BileMo to all platforms that wis
 
 There 2 types of customers (platforms) which can access to the resources of BileMo :
 * 	Anonymous : 
-	* 	Can only access to the documentation of the REST API.
+	* 	Can only access to the documentation of the REST API : `/api/doc`
 * 	Customer authenticated : 
 	* 	In addition to anonymous access can also access to the list of the mobilephones.
 	*   Can also access to the details of the mobilephones.
@@ -83,17 +83,7 @@ PHPUnit is installed too.
 
 ## Authentication with Access Token to access to the REST API :
 
-You can use the initial data for the customer and client OAuth or you can create each other.
-
-1.	Create a new client OAuth with the command line (the username is that of a new customer) :
-
-	```
-	php bin/console bilemo-api:oauth-server:client:create *YourUsername* --redirect-uri=*YourRedirectUri*
-	```
-
-	You get client public id and secret id.
-
-2.	Create a new customer with the command line :
+1.	You can use the initial data for the customer or you can create a new customer with the command line :
 
 	```
 	php bin/console fos:user:create
@@ -101,10 +91,18 @@ You can use the initial data for the customer and client OAuth or you can create
 
 	Enter the username, email and password of a new customer.
 
+2.	Create a new client OAuth with the command line (the username is that of the used customer above) :
+
+	```
+	php bin/console bilemo-api:oauth-server:client:create "YourUsername" --redirect-uri="YourRedirectUri"
+	```
+
+	You get client public id and secret id.
+
 3.	To get an Access Token, go to Postman and do the request :
 
 	```
-	POST:/*YourURI*/oauth/v2/token
+	POST:/"YourURI"/oauth/v2/token
 	```
 
 	with the parameters in the body with raw :
@@ -133,7 +131,7 @@ To access to the resources you must be authenticated with an Access Token (To ge
 In Postman, do requests with the parameters in the headers :
 
 ```
-Authorization: Bearer *YourAccessToken*
+Authorization: Bearer "YourAccessToken"
 Content-type: application/json
 Accept: application/json
 ```
@@ -152,4 +150,3 @@ Accept: application/json;version x.x
 3.	Commit your changes (git commit -am 'Add some feature')
 4.	Push to the branch (git push origin my-new-feature)
 5.	Create new Pull Request
-
