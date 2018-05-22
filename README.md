@@ -53,19 +53,32 @@ PHPUnit is installed too.
 2.	Install composer : https://getcomposer.org/
 
 3.	In project folder open a new terminal window and execute command line : 
+
+	```
 	composer update
+	```
 
 4. 	Create the configuration in /app/config/parameters.yml :
+
 	Copy /app/config/parameters.yml.dist and rename it in /app/config/parameters.yml and update with your parameters.
 
 5. 	Create the database : 
+
+	```
 	php bin/console doctrine:database:create
+	```
 
 6. 	Create schema with entities : 
-	php bin/console doctrine:schema:update --force
 
+	```
+	php bin/console doctrine:schema:update --force
+	```
+	
 7. 	Install initial data with 3 mobilephones and 3 users linked to 3 customers (P7-OC-BileMo/BileMo/src/AppBundle/DataFixtures/ORM/LoadMobilePhones.php, P7-OC-BileMo/BileMo/src/AppBundle/DataFixtures/ORM/LoadUsers.php) : 
+
+	```
 	php bin/console doctrine:fixtures:load
+	```
 
 
 ## Authentication with Access Token to access to the REST API :
@@ -73,16 +86,30 @@ PHPUnit is installed too.
 You can use the initial data for the customer and client OAuth or you can create each other.
 
 1.	Create a new client OAuth with the command line (the username is that of a new customer) :
+
+	```
 	php bin/console bilemo-api:oauth-server:client:create *YourUsername* --redirect-uri=*YourRedirectUri*
+	```
+
 	You get client public id and secret id.
 
 2.	Create a new customer with the command line :
+
+	```
 	php bin/console fos:user:create
+	```
+
 	Enter the username, email and password of a new customer.
 
 3.	To get an Access Token, go to Postman and do the request :
+
+	```
 	POST:/*YourURI*/oauth/v2/token
+	```
+
 	with the parameters in the body with raw :
+
+	```
 		{
 		"grant_type": "password",
 		"client_id": "YourClientPublicId",
@@ -90,8 +117,13 @@ You can use the initial data for the customer and client OAuth or you can create
 		"username": "YourUsername",
 		"password": “YourPassword”
 		}
+	```
+
 	with the parameters in the headers :
-		Content-type: application/json
+
+	```
+	Content-type: application/json
+	```
 
 
 ## Access to the REST API :
@@ -99,12 +131,18 @@ You can use the initial data for the customer and client OAuth or you can create
 To access to the resources you must be authenticated with an Access Token (To get an Access Token see " Authentication with Access Token to access to the REST API").
 
 In Postman, do requests with the parameters in the headers :
-	Authorization: Bearer *YourAccessToken*
-	Content-type: application/json
-	Accept: application/json
 
-If version x.x exists, you can set the parameter :	
-	Accept: application/json;version x.x
+```
+Authorization: Bearer *YourAccessToken*
+Content-type: application/json
+Accept: application/json
+```
+
+If version x.x exists, you can set the parameter :
+
+```	
+Accept: application/json;version x.x
+```
 
 
 ## Contributing :
