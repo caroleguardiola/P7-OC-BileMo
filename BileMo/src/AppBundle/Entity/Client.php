@@ -38,7 +38,7 @@ class Client extends BaseClient
      * @ORM\Column(name="username", type="string", length=180)
      *
      */
-    protected $username;
+    private $username;
 
     public function __construct()
     {
