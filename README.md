@@ -142,6 +142,8 @@ If version x.x exists, you can set the parameter :
 Accept: application/json;version x.x
 ```
 
+The technical documentation of the REST API is available to : `/api/doc`
+
 
 ## Contributing :
 
